@@ -13,7 +13,6 @@ To access the clinical trials database, you will be prompted with a username and
 ``` 
 userid = "'your database account username'"
 userpass = "'your database account password'"
-
 ```
 
 * Save and exit nano pressing the keys `ctrl+c, ctrl+x, y, enter`
