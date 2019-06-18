@@ -1,7 +1,9 @@
 # ClinicalTrialsViz
+
 -
 
-###Setting up system environment variables:
+### Setting up system environment variables:
+
 To access the clinical trials database, you will be prompted with a username and password to connect. If you have not made an AACT account yet, you can sign up [here.](https://aact.ctti-clinicaltrials.org/users/sign_up) Before using the files in this repository, you must do the following:
 
 * Go to the home directory of your terminal `cd $HOME`
@@ -24,7 +26,7 @@ userpass = "'your database account password'"
 
 -
 
-###Connecting to the database
+### Connecting to the database
 
 * First-time startup enter the command (this command will only ever need to be entered one time) `install.packages("RPostgreSQL")`
 
