@@ -22,8 +22,6 @@ userpass = "'your database account password'"
 
 * Now you may use the scripts available in the repository, these environment variables will be referenced later using the syntax Sys.getenv()
 
--
-
 ### Connecting to the database
 
 * First-time startup enter the command (this command will only ever need to be entered one time) `install.packages("RPostgreSQL")`
