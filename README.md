@@ -1,1 +1,1 @@
-# ClinicalTrailsViz
+# ClinicalTrialsViz
