@@ -1,7 +1,5 @@
 # ClinicalTrialsViz
 
--
-
 ### Setting up system environment variables:
 
 To access the clinical trials database, you will be prompted with a username and password to connect. If you have not made an AACT account yet, you can sign up [here.](https://aact.ctti-clinicaltrials.org/users/sign_up) Before using the files in this repository, you must do the following:
