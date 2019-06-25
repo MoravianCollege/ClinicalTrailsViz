@@ -22,7 +22,7 @@ tryCatch({
 drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv,
                  dbname="aact",
-                 host="aact-db.ctti-clinicaltrials.org",
+                 host="clinicaltrialsdatabase.cfdgyctoflg4.us-east-2.rds.amazonaws.com",
                  port=5432,
                  user=Sys.getenv("userid"),
                  password=Sys.getenv("userpass")
