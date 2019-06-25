@@ -22,11 +22,14 @@ tryCatch({
 drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv,
                  dbname="aact",
-                 host="aact-db.ctti-clinicaltrials.org",
+                 host=Sys.getenv("host"),
                  port=5432,
                  user=Sys.getenv("userid"),
                  password=Sys.getenv("userpass")
 )
+
+# Make ctgov schema public
+dbExecute(con, "SET search_path TO ctgov,public")
 
 # Query intervention types and sum up amounts in a table
 studies_intervention <- dbGetQuery(con, "select * from studies natural join interventions")
