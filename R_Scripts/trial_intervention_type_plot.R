@@ -28,6 +28,9 @@ con <- dbConnect(drv,
                  password=Sys.getenv("userpass")
 )
 
+# Make ctgov schema public
+dbExecute(con, "SET search_path TO ctgov,public")
+
 # Query intervention types and sum up amounts in a table
 studies_intervention <- dbGetQuery(con, "select * from studies natural join interventions")
 studies_intervention_grouped <- group_by(studies_intervention, intervention_type)
