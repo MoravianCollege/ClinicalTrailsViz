@@ -36,4 +36,6 @@ completed <- completed %>%
 # Create histogram to visualize the number of people enrolled in each completed trial
 completed %>% 
   filter(enrollment <= 20000) %>% 
-  ggplot() + geom_histogram(mapping = aes(enrollment), bins = 200, fill = 'black')
+  ggplot() + geom_histogram(mapping = aes(enrollment), bins = 200, fill = 'black') + labs(title = "Total Number of Trials by Enrollment Count", caption = "This histogram helps visualize the general trend of how many trials have a certain number of people enrolled.") + theme(plot.title = element_text(hjust = 0.5))
+
+
