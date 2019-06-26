@@ -41,4 +41,4 @@ starting_date %>%
   arrange(start_month) %>%
   summarize(count = n(), na.rm = TRUE) %>% 
   filter(start_month != "") %>%
-  ggplot() + geom_col(aes(start_month, count), color = "black", fill = 'white')
+  ggplot() + geom_col(aes(start_month, count), color = "black", fill = 'white') + labs(title = "Total Number of Trials Started Each Month") + theme(plot.title = element_text(hjust = 0.5))
