@@ -1,0 +1,10 @@
+.env
+.venv
+.idea/
+.ipynb_checkpoints/
+*.pem
+__pycache__/
+*.egg-info/
+.coverage
+/zip_extract_contents
+*.zip
