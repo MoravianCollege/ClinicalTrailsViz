@@ -9,6 +9,12 @@ retrieval_date=$(date +%Y%m%d)
 retrieval_day=$(date +%d)
 retrieval_month=$(date +%m)
 retrieval_year=$(date +%Y)
+
+port=5432
+hostname=$1
+MasterUsername=$2
+DBName=$3
+
 attempts=0
 
 url="https://aact.ctti-clinicaltrials.org/static/static_db_copies/daily/${retrieval_date}_clinical_trials.zip"
@@ -51,4 +57,4 @@ done
 mkdir zip_extract_contents
 unzip -o ${retrieval_date}_clinical_trials.zip -d zip_extract_contents
 
-pg_restore -e -v -O -x -h ${hostname} -p 5432 --username=${MasterUsername} --dbname=${DBName} --no-owner --clean --create zip_extract_contents/postgres_data.dmp
+pg_restore -e -v -O -x -h ${hostname} -p ${port} --username=${MasterUsername} --dbname=${DBName} --no-owner --clean --create zip_extract_contents/postgres_data.dmp
