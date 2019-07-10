@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+from dotenv import load_dotenv
 import boto3
 import os
 import time
 import subprocess
 
+load_dotenv()
 DBName = os.getenv('DBName')
 DBInstanceIdentifier = os.getenv('DBInstanceIdentifier')
 MasterUsername = os.getenv('MasterUsername')
