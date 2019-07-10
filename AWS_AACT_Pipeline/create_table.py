@@ -22,14 +22,6 @@ try:
     )
     cursor = connection.cursor()
 
-    # Print PostgreSQL Connection properties
-    print(connection.get_dsn_parameters(), "\n")
-
-    # Print PostgreSQL version
-    cursor.execute("SELECT version();")
-    record = cursor.fetchone()
-    print("You are connected to:", record, "\n")
-
     # Create and execute table creation query
     create_table_query = '''CREATE TABLE Transformed_Data AS
               SELECT nct_id FROM ctgov.Studies;'''
@@ -51,7 +43,7 @@ try:
     connection.commit()
     print("New column successfully created \n")
 
-    # Populate test column with boolean values
+    # Populate test column with 0s and 1s
     populate_column_true = '''UPDATE Transformed_Data
               SET test_var = mod(cast(substr(nct_id, 4, 8) AS INTEGER), 2);'''
     cursor.execute(populate_column_true)
