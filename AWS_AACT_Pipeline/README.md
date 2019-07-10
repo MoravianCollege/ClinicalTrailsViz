@@ -2,11 +2,11 @@
 
 
 ## Install AWS CLI
-Install the AWS CLI with documentation [here] (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
+Install the AWS CLI with documentation [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
 
 
 ## Configure AWS CLI 
-Configure the AWS CLI with your own amazon credentials. Documentation [here] (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+Configure the AWS CLI with your own amazon credentials. Documentation [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
 
 ## System evironment variables
