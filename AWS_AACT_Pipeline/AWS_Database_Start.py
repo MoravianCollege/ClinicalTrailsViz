@@ -12,7 +12,6 @@ MasterUserPassword = os.getenv('MasterUserPassword')
 # Create RDS database instance
 rds = boto3.client('rds')
 
-
 try:
     response = rds.create_db_instance(
         DBName=DBName,
@@ -26,7 +25,6 @@ try:
     print(response)
 except Exception as error:
     print(error)
-
 
 index = 0
 
@@ -44,16 +42,16 @@ try:
     while True:
         if dbs['DBInstances'][index]['DBInstanceIdentifier'] == DBInstanceIdentifier and \
                 dbs['DBInstances'][index]['DBInstanceStatus'] == 'available':
-            hostname = dbs['DBInstances'][index]['Endpoint']['Address']
-            f = open(os.path.expanduser('~/.bash_profile'), 'a')
-            f.write("export hostname=" + hostname)
-            f.close()
             break
         else:
             print("Sleeping...")
             time.sleep(5)
             dbs = rds.describe_db_instances()
 except Exception as error:
-    print(error)
+    print("Cannot locate database index:", error)
 
-subprocess.call("./get_database_data.sh")
+try:
+    hostname = dbs['DBInstances'][index]['Endpoint']['Address']
+    subprocess.call(['bash', './get_database_data.sh', hostname, MasterUsername, DBName])
+except Exception as error:
+    print(error)
