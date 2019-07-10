@@ -22,14 +22,6 @@ try:
     )
     cursor = connection.cursor()
 
-    # Print PostgreSQL Connection properties
-    print(connection.get_dsn_parameters(), "\n")
-
-    # Print PostgreSQL version
-    cursor.execute("SELECT version();")
-    record = cursor.fetchone()
-    print("You are connected to:", record, "\n")
-
     # Create and execute table deletion query
     delete_table_query = '''DROP TABLE Transformed_Data;'''
     cursor.execute(delete_table_query)
