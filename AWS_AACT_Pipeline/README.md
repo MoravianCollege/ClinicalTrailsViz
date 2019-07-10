@@ -1,11 +1,15 @@
-##Setup
-###Install AWS CLI
+#Setup
+
+
+##Install AWS CLI
 Install the AWS CLI with documentation [here] (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
 
-###Configure AWS CLI 
+
+##Configure AWS CLI 
 Configure the AWS CLI with your own amazon credentials. Documentation [here] (https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 
-###System evironment variables
+
+##System evironment variables
 1. Create a virtual environment named .venv `python3 -m venv .venv`
 
 2. Activate the virtual environment `source .venv/bin/activate`
@@ -23,7 +27,8 @@ MasterUsername=your_username
 MasterUserPassword=your_password
 ```
 
-###Startup
+
+##Startup
 Now that AWS CLI is configured and environment variables are created, run AWS\_Database\_Start.py to start your AWS RDS instance from scratch. 
 
 **Disclaimer:**
