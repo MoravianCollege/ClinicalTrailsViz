@@ -34,5 +34,5 @@ Now that AWS CLI is configured and environment variables are created, run AWS\_D
 **Disclaimer:**
 
 * Database data takes approximately **7 minutes** to download depending on the internet connection.
-* Populating the database takes approximately **35 minutes** with this instance configuration.
+* Populating the database could take up to approximately **35 minutes** with this instance configuration.
 * AWS database instance size default is set to 20 gigabytes, the database as of July 8th, 2019 takes up about **10.5 gigabytes** of space after loaded onto the instance.
