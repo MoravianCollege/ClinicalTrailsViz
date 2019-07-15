@@ -10,10 +10,10 @@ retrieval_day=$(date +%d)
 retrieval_month=$(date +%m)
 retrieval_year=$(date +%Y)
 
-port=5432
 hostname=$1
-MasterUsername=$2
-DBName=$3
+DBPort=$2
+MasterUsername=$3
+DBName=$4
 
 attempts=0
 
@@ -57,4 +57,7 @@ done
 mkdir zip_extract_contents
 unzip -o ${retrieval_date}_clinical_trials.zip -d zip_extract_contents
 
-pg_restore -e -v -O -x -h ${hostname} -p ${port} --username=${MasterUsername} --dbname=${DBName} --no-owner --clean --create zip_extract_contents/postgres_data.dmp
+pg_restore -e -v -O -x -h ${hostname} -p ${DBPort} --username ${MasterUsername} --dbname ${DBName} --no-owner --clean --if-exists --create zip_extract_contents/postgres_data.dmp
+
+python3 sponsor_type_temp.py "$hostname"
+python3 condition_type.py "$hostname"
