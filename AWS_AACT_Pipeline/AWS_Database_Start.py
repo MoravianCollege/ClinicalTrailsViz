@@ -6,10 +6,11 @@ import time
 import subprocess
 
 load_dotenv()
-DBName = os.getenv('DBName')
+DBName = 'aact_back'
 DBInstanceIdentifier = os.getenv('DBInstanceIdentifier')
 MasterUsername = os.getenv('MasterUsername')
 MasterUserPassword = os.getenv('MasterUserPassword')
+DBPort = os.getenv('DBPort')
 
 # Create RDS database instance
 rds = boto3.client('rds')
@@ -23,8 +24,7 @@ try:
         DBInstanceClass='db.m4.large',
         Engine='postgres',
         AllocatedStorage=20,
-        Port=5432)
-    print(response)
+        Port=int(DBPort))
 except Exception as error:
     print(error)
 
@@ -46,14 +46,14 @@ try:
                 dbs['DBInstances'][index]['DBInstanceStatus'] == 'available':
             break
         else:
-            print("Sleeping...")
-            time.sleep(5)
+            print("Waiting for new instance to become available...")
+            time.sleep(15)
             dbs = rds.describe_db_instances()
 except Exception as error:
     print("Cannot locate database index:", error)
 
 try:
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
-    subprocess.call(['bash', './get_database_data.sh', hostname, MasterUsername, DBName])
+    subprocess.call(['bash', './get_database_data.sh', hostname, DBPort, MasterUsername, DBName])
 except Exception as error:
     print(error)
