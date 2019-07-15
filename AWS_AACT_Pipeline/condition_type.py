@@ -4,69 +4,87 @@ import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 import numpy as np
-import re
+import sys
 
-# load information from .venv file to log in and connect to the database
-load_dotenv()
-host = os.getenv('hostname')
-port = os.getenv('port')
-database_name = os.getenv('database')
-user = os.getenv('username')
-password = os.getenv('password')
+try:
+    # load information from .env file to log in and connect to the database
+    load_dotenv()
+    MasterUsername = os.getenv('MasterUsername')
+    MasterUserPassword = os.getenv('MasterUserPassword')
+    hostname = sys.argv[1]
+    DBName = os.getenv('DBName')
+    DBPort = os.getenv('DBPort')
 
-# connect to the database
-connection = psycopg2.connect(
-    database=database_name,
-    user=user,
-    password=password,
-    host=host,
-    port=port
-)
+    # Connect to database
+    connection = psycopg2.connect(
+        user=MasterUsername,
+        password=MasterUserPassword,
+        host=hostname,
+        database=DBName,
+        port=DBPort)
 
-# initiated variables to create the new column
-sql_command = "SELECT * FROM ctgov.conditions"
-new_column_name = 'condition_type'
+    cursor = connection.cursor()
 
-# retrieve wanted data from the query (in the form of a data frame)
-df = pd.read_sql_query(sql_command, con=connection)
+    # initiated variables to create the new column
+    sql_command = "SELECT nct_id, downcase_mesh_term FROM ctgov.browse_conditions"
+    new_column_name = 'condition_type'
 
-# check conditions to determine the value to be assigned for the row in the new column
-col = 'downcase_name'
-conditions = [
-    df[col].str.contains("cancer|lymphoma|leukemia|melanoma|carcinoma|neoplasm|mesothelioma|sarcoma|glioblastoma"),
-    df[col].str.contains(
-        "hiv|influen|immune deficiency|malaria|hepatitis|sepsis|tuberculosis|pneumonia|(?<![\w\d])infection(?![\w\d])",
-        regex=True),
-    df[col].str.contains("multiple sclerosis|parkinson|alzheim|dementia|epilepsy|brain|cognitive impair|migraine"),
-    df[col].str.contains("healthy"),
-    df[col].str.contains("obesity|diabete|metaboli|weight|thyroid|insulin|cholesterol|vitamin|nutrition"),
-    df[col].str.contains("cardio|heart|atria|arter|coronar|atherosclerosis"),
-    df[col].str.contains("asthma|pulmonary disease|respirator|copd|sleep apnea|smok"),
-    df[col].str.contains("anxi|depress|schizo|bipolar|psychosis|autism|insomnia"),
-    df[col].str.contains("stroke"),
-    df[col].str.contains("rheuma|inflamma"),
-    df[col].str.contains("osteoarthritis|osteoporosis|fibromyalgia"),
-    df[col].str.contains(
-        "pregn|infertil|birth|contracept|abortion|mammary|menstruat|menopause|in vitro|(?<![\w\d])art(?![\w\d])",
-        regex=True),
-    df[col].str.contains("cystic fibrosis|cerebral"),
-    df[col].str.contains("anemi|myelodysplastic|sickle"),
-    df[col].str.contains("kidney|(?<![\w\d])renal(?![\w\d])", regex=True),
-    df[col].str.contains("psoriasis|dermat"),
-    df[col].str.contains("glaucoma|cataract|myopia|oculur"),
-    df[col].str.contains("crohn|bowel|colitis")]
+    # retrieve wanted data from the query (in the form of a data frame)
+    df = pd.read_sql_query(sql_command, con=connection)
 
-choices = ["Oncology", "Infection", "Neurology", "Healthy", "Metabolic & Endocrine", "Cardiovascular", "Respiratory",
-           "Mental Health", "Stroke", "Inflammatory & Immune", "Musculoskeletal", "Reproductive",
-           "Congenital Disorders",
-           "Blood", "Renal & Urogenital", "Skin", "Eye", "Oral & Gastrointestinal"]
+    # check conditions to determine the value to be assigned for the row in the new column
+    col = 'downcase_mesh_term'
+    conditions = [
+        df[col].str.contains("cancer|lymphoma|leukemia|melanoma|carcinoma|neoplasm|mesothelioma|sarcoma|glioblastoma"),
+        df[col].str.contains(
+            "hiv|influen|immune deficiency|malaria|hepatitis|sepsis|tuberculosis|pneumonia|(?<![\w\d])infection(?![\w\d])",
+            regex=True),
+        df[col].str.contains("multiple sclerosis|parkinson|alzheim|dementia|epilepsy|brain|cognitive impair|migraine"),
+        df[col].str.contains("healthy"),
+        df[col].str.contains("obesity|diabete|metaboli|weight|thyroid|insulin|cholesterol|vitamin|nutrition"),
+        df[col].str.contains("cardio|heart|atria|arter|coronar|atherosclerosis"),
+        df[col].str.contains("asthma|pulmonary disease|respirator|copd|sleep apnea|smok"),
+        df[col].str.contains("anxi|depress|schizo|bipolar|psychosis|autism|insomnia"),
+        df[col].str.contains("stroke"),
+        df[col].str.contains("rheuma|inflamma"),
+        df[col].str.contains("osteoarthritis|osteoporosis|fibromyalgia"),
+        df[col].str.contains(
+            "pregn|infertil|birth|contracept|abortion|mammary|menstruat|menopause|in vitro|(?<![\w\d])art(?![\w\d])",
+            regex=True),
+        df[col].str.contains("cystic fibrosis|cerebral"),
+        df[col].str.contains("anemi|myelodysplastic|sickle"),
+        df[col].str.contains("kidney|(?<![\w\d])renal(?![\w\d])", regex=True),
+        df[col].str.contains("psoriasis|dermat"),
+        df[col].str.contains("glaucoma|cataract|myopia|oculur"),
+        df[col].str.contains("crohn|bowel|colitis")]
 
-df["condition_type"] = np.select(conditions, choices, "Other")
+    choices = ["Oncology", "Infection", "Neurology", "Healthy", "Metabolic & Endocrine", "Cardiovascular",
+               "Respiratory",
+               "Mental Health", "Stroke", "Inflammatory & Immune", "Musculoskeletal", "Reproductive",
+               "Congenital Disorders",
+               "Blood", "Renal & Urogenital", "Skin", "Eye", "Oral & Gastrointestinal"]
 
-# will print the new categories and their counts for the created column
-print(df[new_column_name].value_counts())
+    df["condition_type"] = np.select(conditions, choices, "Other")
 
-# will print the table from the sql command + the new column added
-print(df)
+    df.drop('downcase_mesh_term', axis=1, inplace=True)
 
-connection.close()
+    create_table_query = '''CREATE TABLE ctgov.condition_type
+                                (nct_id varchar(15), sponsor_category varchar(30));'''
+    cursor.execute(create_table_query)
+    connection.commit()
+
+    # Create a directory for csv information if it doesn't exist yet
+    if not os.path.exists('csv_scripts'):
+        os.makedirs('csv_scripts')
+
+    df.to_csv(r'csv_scripts/condition_type.csv', index=False, header=False)
+    f = open('csv_scripts/condition_type.csv')
+
+    cursor.copy_from(f, 'ctgov.condition_type', columns=None, sep=",")
+    print("Table populated successfully.")
+
+    connection.commit()
+    connection.close()
+
+except Exception as error:
+    print(error)
