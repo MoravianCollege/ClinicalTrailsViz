@@ -59,5 +59,5 @@ unzip -o ${retrieval_date}_clinical_trials.zip -d zip_extract_contents
 
 pg_restore -e -v -O -x -h ${hostname} -p ${DBPort} --username ${MasterUsername} --dbname ${DBName} --no-owner --clean --if-exists --create zip_extract_contents/postgres_data.dmp
 
-python3 sponsor_type_temp.py "$hostname"
+python3 sponsor_type.py "$hostname"
 python3 condition_type.py "$hostname"
