@@ -10,6 +10,7 @@ retrieval_day=$(date +%d)
 retrieval_month=$(date +%m)
 retrieval_year=$(date +%Y)
 
+#These variables are received from AWS_Database_Start.py
 hostname=$1
 DBPort=$2
 MasterUsername=$3
@@ -59,5 +60,4 @@ unzip -o ${retrieval_date}_clinical_trials.zip -d zip_extract_contents
 
 pg_restore -e -v -O -x -h ${hostname} -p ${DBPort} --username ${MasterUsername} --dbname ${DBName} --no-owner --clean --if-exists --create zip_extract_contents/postgres_data.dmp
 
-python3 sponsor_type.py "$hostname"
-python3 condition_type.py "$hostname"
+python3 create_categorical_tables.py
