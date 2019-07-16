@@ -54,7 +54,7 @@ try:
         return obj
 
     # function checks conditions based on the values in the JSON file - used to apply to each row in the data frame
-    def practice(name):
+    def check_conditions(name):
         obj = read_file_conditions()
         result = nan_filler
         is_condition_met = False
@@ -70,7 +70,7 @@ try:
 
 
     # retrieve and vectorize the function to be applied to each row in the data frame
-    func = np.vectorize(practice)
+    func = np.vectorize(check_conditions)
 
     # apply the function to the data frame
     condition_type = func(df[original_col])
