@@ -28,6 +28,7 @@ try:
 
     cursor = connection.cursor()
 
+    # Delete table if it exists
     table_name = "sponsor_type"
     # Create and execute table deletion query
     delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
