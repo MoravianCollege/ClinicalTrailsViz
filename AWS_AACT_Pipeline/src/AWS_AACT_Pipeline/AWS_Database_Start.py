@@ -51,7 +51,8 @@ try:
         print("Cannot locate database index:", error)
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
-    subprocess.call(['bash', 'scripts/get_database_data.sh', hostname, DBPort, MasterUsername, DBName])
+
+    subprocess.call(['bash', '../../scripts/get_database_data.sh', hostname, DBPort, MasterUsername, DBName])
 
 except Exception as error:
     print(error)
