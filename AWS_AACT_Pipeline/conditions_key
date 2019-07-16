@@ -1,0 +1,142 @@
+{
+  "Oncology": [
+      "cancer",
+      "lymphoma",
+      "leukemia",
+      "melanoma",
+      "carcinoma",
+      "neoplasm",
+      "mesothelioma",
+      "sarcoma",
+      "glioblastoma"
+   ],
+
+    "Neurology": [
+      "multiple sclerosis",
+      "parkinson",
+      "alzheim",
+      "dementia",
+      "epilepsy",
+      "brain",
+      "cognitive impair",
+      "migraine"
+    ],
+
+    "Metabolic & Endocrine": [
+      "obesity",
+      "diabete",
+      "metaboli",
+      "weight",
+      "thyroid",
+      "insulin",
+      "cholesterol",
+      "vitamin",
+      "nutrition"
+    ],
+
+    "Cardiovascular": [
+      "cardio",
+      "heart",
+      "atria",
+      "arter",
+      "coronar",
+      "atherosclerosis"
+    ],
+
+    "Infection": [
+      "hiv",
+      "influen",
+      "immune deficiency",
+      "malaria",
+      "hepatitis",
+      "sepsis",
+      "tuberculosis",
+      "pneumonia",
+       "(?<![\\w\\d])infection(?![\\w\\d])"
+    ],
+
+    "Respiratory": [
+      "asthma",
+      "pulmonary disease",
+      "repirator",
+      "copd",
+      "sleep apnea",
+      "smok"
+    ],
+
+    "Renal & Urogenital": [
+      "kidney",
+      "(?<![\\w\\d])renal(?![\\w\\d])"
+    ],
+
+    "Mental Health": [
+      "anxi",
+      "depress",
+      "schizo",
+      "bipolar",
+      "psychosis",
+      "autism",
+      "insomia"
+    ],
+
+    "Cogenital Disorders":[
+      "cystic fibrosis",
+      "cerebral"
+    ],
+
+    "Musculoskeletal": [
+      "osteoarthritis",
+      "osteoporosis",
+      "fibromyalgia"
+    ],
+
+    "Inflammatory & Immune": [
+      "rheuma",
+      "inflamma"
+    ],
+
+    "Oral & Gastrointestinal": [
+      "crohn",
+      "bowel",
+      "colitis"
+    ],
+
+    "Reproductive": [
+      "pregn",
+      "infertil",
+      "birth",
+      "contracept",
+      "abortion",
+      "mammary",
+      "menstruat",
+      "menopause",
+      "in vitro",
+      "(?<![\\w\\d])art(?![\\w\\d])"
+    ],
+
+    "Blood": [
+      "anemi",
+      "myelodysplastic",
+      "sickle"
+    ],
+
+    "Skin": [
+      "psoriasis",
+      "dermat"
+    ],
+
+    "Eye": [
+      "glaucoma",
+      "cataract",
+      "myopia",
+      "oculur"
+    ],
+
+    "Stroke": [
+      "stroke"
+    ],
+
+    "Healthy": [
+      "healthy"
+    ]
+}
