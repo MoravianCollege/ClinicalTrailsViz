@@ -28,6 +28,15 @@ try:
 
     cursor = connection.cursor()
 
+    # Delete table if it exists
+    table_name = "sponsor_type"
+    # Create and execute table deletion query
+    delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
+    cursor.execute(delete_table_query)
+
+    connection.commit()
+    print("Table {} successfully deleted from PostgreSQL \n".format(table_name))
+
     # initiated variables to create the new column
     sql_command = "SELECT nct_id, name FROM ctgov.sponsors"
     new_column_name = 'sponsor_category'

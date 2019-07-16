@@ -7,7 +7,7 @@ import subprocess
 
 try:
     load_dotenv()
-    DBName = 'aact_back'
+    DBName = os.getenv('Temp_DBName')
     DBInstanceIdentifier = os.getenv('DBInstanceIdentifier')
     MasterUsername = os.getenv('MasterUsername')
     MasterUserPassword = os.getenv('MasterUserPassword')
