@@ -16,15 +16,15 @@ try:
     # Create RDS database instance
     rds = boto3.client('rds')
 
-    # response = rds.create_db_instance(
-    #     DBName=DBName,
-    #     DBInstanceIdentifier=DBInstanceIdentifier,
-    #     MasterUsername=MasterUsername,
-    #     MasterUserPassword=MasterUserPassword,
-    #     DBInstanceClass='db.m4.large',
-    #     Engine='postgres',
-    #     AllocatedStorage=20,
-    #     Port=int(DBPort))
+    response = rds.create_db_instance(
+        DBName=DBName,
+        DBInstanceIdentifier=DBInstanceIdentifier,
+        MasterUsername=MasterUsername,
+        MasterUserPassword=MasterUserPassword,
+        DBInstanceClass='db.m4.large',
+        Engine='postgres',
+        AllocatedStorage=20,
+        Port=int(DBPort))
 
     index = 0
 
