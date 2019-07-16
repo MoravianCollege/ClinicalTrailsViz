@@ -1,10 +1,11 @@
-# coding=utf-8
 import os
 import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 import numpy as np
 import sys
+import json
+import re
 
 try:
     # load information from .env file to log in and connect to the database
@@ -25,6 +26,13 @@ try:
 
     cursor = connection.cursor()
 
+    # initiated variables to create the new column - fill as needed
+    sql_command = "SELECT * FROM ctgov.conditions"
+    new_column_name = "condition_type"
+    filename = "conditions_key"
+    original_col = "downcase_name"
+    nan_filler = "Other"
+
     # Delete table if it exists
     table_name = "condition_type"
     # Create and execute table deletion query
@@ -34,48 +42,48 @@ try:
     connection.commit()
     print("Table {} successfully deleted from PostgreSQL".format(table_name))
 
-    # initiated variables to create the new column
-    sql_command = "SELECT nct_id, downcase_mesh_term FROM ctgov.browse_conditions"
-    new_column_name = 'condition_type'
-
-    # retrieve wanted data from the query (in the form of a data frame)
+    # retrieve necessary data in the form of a data frame
     df = pd.read_sql_query(sql_command, con=connection)
 
-    # check conditions to determine the value to be assigned for the row in the new column
-    col = 'downcase_mesh_term'
-    conditions = [
-        df[col].str.contains("cancer|lymphoma|leukemia|melanoma|carcinoma|neoplasm|mesothelioma|sarcoma|glioblastoma"),
-        df[col].str.contains(
-            "hiv|influen|immune deficiency|malaria|hepatitis|sepsis|tuberculosis|pneumonia|(?<![\w\d])infection(?![\w\d])",
-            regex=True),
-        df[col].str.contains("multiple sclerosis|parkinson|alzheim|dementia|epilepsy|brain|cognitive impair|migraine"),
-        df[col].str.contains("healthy"),
-        df[col].str.contains("obesity|diabete|metaboli|weight|thyroid|insulin|cholesterol|vitamin|nutrition"),
-        df[col].str.contains("cardio|heart|atria|arter|coronar|atherosclerosis"),
-        df[col].str.contains("asthma|pulmonary disease|respirator|copd|sleep apnea|smok"),
-        df[col].str.contains("anxi|depress|schizo|bipolar|psychosis|autism|insomnia"),
-        df[col].str.contains("stroke"),
-        df[col].str.contains("rheuma|inflamma"),
-        df[col].str.contains("osteoarthritis|osteoporosis|fibromyalgia"),
-        df[col].str.contains(
-            "pregn|infertil|birth|contracept|abortion|mammary|menstruat|menopause|in vitro|(?<![\w\d])art(?![\w\d])",
-            regex=True),
-        df[col].str.contains("cystic fibrosis|cerebral"),
-        df[col].str.contains("anemi|myelodysplastic|sickle"),
-        df[col].str.contains("kidney|(?<![\w\d])renal(?![\w\d])", regex=True),
-        df[col].str.contains("psoriasis|dermat"),
-        df[col].str.contains("glaucoma|cataract|myopia|oculur"),
-        df[col].str.contains("crohn|bowel|colitis")]
 
-    choices = ["Oncology", "Infection", "Neurology", "Healthy", "Metabolic & Endocrine", "Cardiovascular",
-               "Respiratory",
-               "Mental Health", "Stroke", "Inflammatory & Immune", "Musculoskeletal", "Reproductive",
-               "Congenital Disorders",
-               "Blood", "Renal & Urogenital", "Skin", "Eye", "Oral & Gastrointestinal"]
+    # function to open JSON file, read, and obtain/return the object with the file's information
+    def read_file_conditions():
+        with open(filename, 'r') as myfile:
+            data = myfile.read()
 
-    df["condition_type"] = np.select(conditions, choices, "Other")
+        obj = json.loads(data)
+        return obj
 
-    df.drop('downcase_mesh_term', axis=1, inplace=True)
+
+    # function checks conditions based on the values in the JSON file - used to apply to each row in the data frame
+    def practice(name):
+        obj = read_file_conditions()
+        result = nan_filler
+        is_condition_met = False
+        for label in obj:
+            for comparison in obj[label]:
+                if re.search(comparison, name) is not None:
+                    result = label
+                    is_condition_met = True
+                    break
+            if is_condition_met:
+                break
+        return result
+
+
+    # retrieve and vectorize the function to be applied to each row in the data frame
+    func = np.vectorize(practice)
+
+    # apply the function to the data frame
+    condition_type = func(df[original_col])
+
+    # adds the new column to the data frame with new column name
+    df[new_column_name] = condition_type
+
+    # prints the counts for each category in the new column (just so the user can see results)
+    print(df[new_column_name].value_counts())
+
+    df.drop(original_col, axis=1, inplace=True)
 
     create_table_query = '''CREATE TABLE ctgov.condition_type
                                 (nct_id varchar(15), sponsor_category varchar(30));'''
