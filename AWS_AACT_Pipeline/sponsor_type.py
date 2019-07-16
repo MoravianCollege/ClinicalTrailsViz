@@ -7,8 +7,6 @@ import numpy as np
 import re
 import sys
 
-df = pd.DataFrame
-
 try:
     # load information from .env file to log in and connect to the database
     load_dotenv()
@@ -35,7 +33,7 @@ try:
     cursor.execute(delete_table_query)
 
     connection.commit()
-    print("Table {} successfully deleted from PostgreSQL \n".format(table_name))
+    print("Table {} successfully deleted from PostgreSQL".format(table_name))
 
     # initiated variables to create the new column
     sql_command = "SELECT nct_id, name FROM ctgov.sponsors"
@@ -58,30 +56,28 @@ try:
 
     df.drop('name', axis=1, inplace=True)
 
+    create_table_query = '''CREATE TABLE ctgov.sponsor_type
+                                (nct_id varchar(15), sponsor_category varchar(25));'''
+    cursor.execute(create_table_query)
+    connection.commit()
+
     # Create a directory for csv information if it doesn't exist yet
     if not os.path.exists('csv_scripts'):
         os.makedirs('csv_scripts')
 
     df.to_csv(r'csv_scripts/sponsor_type.csv', index=False, header=False)
-
-    create_table_query = '''CREATE TABLE ctgov.sponsor_type
-                            (nct_id varchar(15), sponsor_category varchar(25));'''
-    cursor.execute(create_table_query)
-    connection.commit()
-
     f = open('csv_scripts/sponsor_type.csv')
 
     cursor.copy_from(f, 'ctgov.sponsor_type', columns=None, sep=",")
-    print("Table populated successfully.")
+    print("Table {} populated successfully".format(table_name))
 
     connection.commit()
 
-except (Exception, psycopg2.Error) as error:
-    print("Error while connecting to PostgreSQL", error)
+except Exception as error:
+    print(error)
 
 finally:
     # Closing database connection
     if connection:
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
