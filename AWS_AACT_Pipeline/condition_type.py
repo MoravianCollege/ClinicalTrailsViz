@@ -27,7 +27,7 @@ try:
     cursor = connection.cursor()
 
     # initiated variables to create the new column - fill as needed
-    sql_command = "SELECT * FROM ctgov.conditions"
+    sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
     new_column_name = "condition_type"
     filename = "conditions_key"
     original_col = "downcase_name"
@@ -45,7 +45,6 @@ try:
     # retrieve necessary data in the form of a data frame
     df = pd.read_sql_query(sql_command, con=connection)
 
-
     # function to open JSON file, read, and obtain/return the object with the file's information
     def read_file_conditions():
         with open(filename, 'r') as myfile:
@@ -53,7 +52,6 @@ try:
 
         obj = json.loads(data)
         return obj
-
 
     # function checks conditions based on the values in the JSON file - used to apply to each row in the data frame
     def practice(name):
