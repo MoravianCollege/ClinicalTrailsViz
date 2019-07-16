@@ -12,7 +12,7 @@ try:
     load_dotenv()
     MasterUsername = os.getenv('MasterUsername')
     MasterUserPassword = os.getenv('MasterUserPassword')
-    hostname = 'clinicaltrialstestserver.cfdgyctoflg4.us-east-2.rds.amazonaws.com'
+    hostname = sys.argv[1]
     DBName = os.getenv('DBName')
     DBPort = os.getenv('DBPort')
 
