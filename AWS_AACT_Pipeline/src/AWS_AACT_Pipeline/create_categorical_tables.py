@@ -23,7 +23,7 @@ try:
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
 
-    subprocess.call(['bash', './generate_tables.sh', hostname])
+    subprocess.call(['bash', 'scripts/generate_tables.sh', hostname])
 
 except Exception as error:
     print(error)
