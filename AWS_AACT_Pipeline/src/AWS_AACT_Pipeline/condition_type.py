@@ -10,12 +10,12 @@ import re
 
 class ConditionCategorizer:
 
-    def __init__(self,filename):
+    def __init__(self):
         # load information from .env file to log in and connect to the database
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
         self.MasterUserPassword = os.getenv('MasterUserPassword')
-        self.hostname = sys.argv[1]
+        self.hostname = os.getenv("Hostname")
         self.DBName = os.getenv('DBName')
         self.DBPort = os.getenv('DBPort')
 
@@ -27,7 +27,7 @@ class ConditionCategorizer:
         # customizable variables: can change if doing a different categorization
         self.sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
         self.new_column_name = "condition_type"
-        self.filename = filename
+        self.filename = "conditions_key"
         self.original_col = "downcase_name"
         self.nan_filler = "Other"
         self.table_name = "condition_type"
@@ -55,7 +55,12 @@ class ConditionCategorizer:
         print("Table {} successfully deleted from PostgreSQL".format(self.table_name))
 
     def read_file_conditions(self):
-        with open(self.filename, 'r') as myfile:
+        # Get file location
+        file_path = os.path.dirname(os.path.abspath(__file__))
+        parent = os.path.dirname(os.path.dirname(file_path))
+        data_path = os.path.join(parent, self.filename)
+
+        with open(data_path, 'r') as myfile:
             data = myfile.read()
         self.obj = json.loads(data)
 

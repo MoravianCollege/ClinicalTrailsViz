@@ -23,7 +23,11 @@ try:
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
 
-    subprocess.call(['bash', '../../scripts/generate_tables.sh', hostname])
+    # Get path to generate_tables.sh file and pass hostname
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    project_path = os.path.abspath(os.path.join(file_path, os.path.pardir))
+    data_path = os.path.join(project_path, 'AWS_AACT_Pipeline/scripts/generate_tables.sh')
+    subprocess.call(['bash', data_path, hostname])
 
 except Exception as error:
     print(error)
