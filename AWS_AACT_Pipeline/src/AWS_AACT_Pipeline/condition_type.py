@@ -15,8 +15,8 @@ class ConditionCategorizer:
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
         self.MasterUserPassword = os.getenv('MasterUserPassword')
-        self.hostname = 'clinicaltrialsdatabase.cfdgyctoflg4.us-east-2.rds.amazonaws.com'
-        self.DBName = "aact"
+        self.hostname = sys.argv[1]
+        self.DBName = os.getenv('DBName')
         self.DBPort = os.getenv('DBPort')
 
         # other initiated variables to be changed when categorizing
