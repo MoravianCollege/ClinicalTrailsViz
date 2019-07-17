@@ -29,7 +29,7 @@ try:
     # initiated variables to create the new column - fill as needed
     sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
     new_column_name = "condition_type"
-    filename = "conditions_key"
+    filename = "../../conditions_key"
     original_col = "downcase_name"
     nan_filler = "Other"
 
