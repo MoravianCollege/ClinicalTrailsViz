@@ -27,7 +27,7 @@ class ConditionCategorizer:
         # customizable variables: can change if doing a different categorization
         self.sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
         self.new_column_name = "condition_type"
-        self.filename = "/Users/kylienorwood/ComputerScience/MerckSummer19/ClinicalTrialsViz/AWS_AACT_Pipeline/conditions_key"
+        self.filename = "../../conditions_key"
         self.original_col = "downcase_name"
         self.nan_filler = "Other"
         self.table_name = "condition_type"
