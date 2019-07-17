@@ -52,7 +52,11 @@ try:
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
 
-    subprocess.call(['bash', '../../scripts/get_database_data.sh', hostname, DBPort, MasterUsername, Temp_DBName])
+    # Get path to get_database_data.sh file and pass DB variables
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    project_path = os.path.abspath(os.path.join(file_path, os.path.pardir))
+    data_path = os.path.join(project_path, 'AWS_AACT_Pipeline/scripts/get_database_data.sh')
+    subprocess.call(['bash', data_path, hostname, DBPort, MasterUsername, Temp_DBName])
 
 except Exception as error:
     print(error)
