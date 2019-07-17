@@ -47,7 +47,6 @@ class ConditionCategorizer:
 
     def delete_table_if_exists(self):
         # Delete table if it exists
-        table_name = "condition_type"
         # Create and execute table deletion query
         delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
         self.get_cursor().execute(delete_table_query)
