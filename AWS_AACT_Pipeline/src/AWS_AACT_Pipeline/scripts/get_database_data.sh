@@ -60,4 +60,8 @@ unzip -o ${retrieval_date}_clinical_trials.zip -d zip_extract_contents
 
 pg_restore -e -v -O -x -h ${hostname} -p ${DBPort} --username ${MasterUsername} --dbname ${Temp_DBName} --no-owner --clean --if-exists --create zip_extract_contents/postgres_data.dmp
 
-python3 ../../src/AWS_AACT_Pipeline/create_categorical_tables.py
+
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd ${parent_path}
+
+python3 ../create_categorical_tables.py
