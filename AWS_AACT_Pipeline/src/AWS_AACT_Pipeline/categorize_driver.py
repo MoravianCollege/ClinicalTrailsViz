@@ -1,6 +1,6 @@
 from AWS_AACT_Pipeline.src.AWS_AACT_Pipeline.condition_type import ConditionCategorizer
 
-driver = ConditionCategorizer()
+driver = ConditionCategorizer("../../conditions_key")
 
 print("Starting categorization...")
 
