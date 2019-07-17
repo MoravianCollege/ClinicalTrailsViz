@@ -16,6 +16,7 @@ try:
     print("Categorization complete")
 
     driver.make_new_table()
+    print(driver.table_name, "was created successfully")
 
 except Exception as error:
     print(error)
@@ -23,3 +24,4 @@ except Exception as error:
 finally:
     # Closing database connection
     driver.close_connection()
+    print("Connection closed successfully")
