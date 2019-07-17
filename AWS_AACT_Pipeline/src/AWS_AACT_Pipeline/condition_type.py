@@ -48,11 +48,11 @@ class ConditionCategorizer:
     def delete_table_if_exists(self):
         # Delete table if it exists
         # Create and execute table deletion query
-        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
+        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(self.table_name)
         self.get_cursor().execute(delete_table_query)
 
         self.connection.commit()
-        print("Table {} successfully deleted from PostgreSQL".format(table_name))
+        print("Table {} successfully deleted from PostgreSQL".format(self.table_name))
 
     def read_file_conditions(self):
         with open(self.filename, 'r') as myfile:
