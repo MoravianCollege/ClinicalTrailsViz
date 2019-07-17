@@ -10,7 +10,7 @@ import re
 
 class ConditionCategorizer:
 
-    def __init__(self):
+    def __init__(self,filename):
         # load information from .env file to log in and connect to the database
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
@@ -27,7 +27,7 @@ class ConditionCategorizer:
         # customizable variables: can change if doing a different categorization
         self.sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
         self.new_column_name = "condition_type"
-        self.filename = "../../conditions_key"
+        self.filename = filename
         self.original_col = "downcase_name"
         self.nan_filler = "Other"
         self.table_name = "condition_type"
@@ -87,7 +87,7 @@ class ConditionCategorizer:
     def make_new_table(self):
         self.df.drop(self.original_col, axis=1, inplace=True)
         create_table_query = '''CREATE TABLE ctgov.condition_type
-                                            (nct_id varchar(15), sponsor_category varchar(30));'''
+                                            (nct_id varchar(15), condition_category varchar(30));'''
         self.get_cursor().execute(create_table_query)
         self.connection.commit()
         # Create a directory for csv information if it doesn't exist yet
