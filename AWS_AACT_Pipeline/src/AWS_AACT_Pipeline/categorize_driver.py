@@ -24,4 +24,3 @@ except Exception as error:
 finally:
     # Closing database connection
     driver.close_connection()
-    print("Connection closed successfully")
