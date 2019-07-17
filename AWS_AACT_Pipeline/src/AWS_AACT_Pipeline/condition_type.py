@@ -84,7 +84,7 @@ try:
     df.drop(original_col, axis=1, inplace=True)
 
     create_table_query = '''CREATE TABLE ctgov.condition_type
-                                (nct_id varchar(15), sponsor_category varchar(30));'''
+                                (nct_id varchar(15), condition_category varchar(30));'''
     cursor.execute(create_table_query)
     connection.commit()
 
