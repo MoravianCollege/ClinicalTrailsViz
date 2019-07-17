@@ -1,4 +1,4 @@
-from AWS_AACT_Pipeline.src.AWS_AACT_Pipeline.condition_type import ConditionCategorizer
+from AWS_AACT_Pipeline.condition_type import ConditionCategorizer
 
 driver = ConditionCategorizer()
 
