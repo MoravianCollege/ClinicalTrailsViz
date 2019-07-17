@@ -7,7 +7,7 @@ import subprocess
 
 try:
     load_dotenv()
-    DBName = os.getenv('Temp_DBName')
+    Temp_DBName = os.getenv('Temp_DBName')
     DBInstanceIdentifier = os.getenv('DBInstanceIdentifier')
     MasterUsername = os.getenv('MasterUsername')
     MasterUserPassword = os.getenv('MasterUserPassword')
@@ -17,7 +17,7 @@ try:
     rds = boto3.client('rds')
 
     response = rds.create_db_instance(
-        DBName=DBName,
+        DBName=Temp_DBName,
         DBInstanceIdentifier=DBInstanceIdentifier,
         MasterUsername=MasterUsername,
         MasterUserPassword=MasterUserPassword,
@@ -52,7 +52,7 @@ try:
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
 
-    subprocess.call(['bash', '../../scripts/get_database_data.sh', hostname, DBPort, MasterUsername, DBName])
+    subprocess.call(['bash', '../../scripts/get_database_data.sh', hostname, DBPort, MasterUsername, Temp_DBName])
 
 except Exception as error:
     print(error)
