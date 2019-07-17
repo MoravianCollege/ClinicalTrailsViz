@@ -7,59 +7,67 @@ import sys
 import json
 import re
 
-try:
-    # load information from .env file to log in and connect to the database
-    load_dotenv()
-    MasterUsername = os.getenv('MasterUsername')
-    MasterUserPassword = os.getenv('MasterUserPassword')
-    hostname = sys.argv[1]
-    DBName = os.getenv('DBName')
-    DBPort = os.getenv('DBPort')
 
-    # Connect to database
-    connection = psycopg2.connect(
-        user=MasterUsername,
-        password=MasterUserPassword,
-        host=hostname,
-        database=DBName,
-        port=DBPort)
+class ConditionCategorizer:
 
-    cursor = connection.cursor()
+    def __init__(self):
+        # load information from .env file to log in and connect to the database
+        load_dotenv()
+        self.MasterUsername = os.getenv('MasterUsername')
+        self.MasterUserPassword = os.getenv('MasterUserPassword')
+        self.hostname = 'clinicaltrialsdatabase.cfdgyctoflg4.us-east-2.rds.amazonaws.com'
+        self.DBName = "aact"
+        self.DBPort = os.getenv('DBPort')
 
-    # initiated variables to create the new column - fill as needed
-    sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
-    new_column_name = "condition_type"
-    filename = "../../conditions_key"
-    original_col = "downcase_name"
-    nan_filler = "Other"
+        # other initiated variables to be changed when categorizing
+        self.connection = None
+        self.df = None
+        self.obj = None
 
-    # Delete table if it exists
-    table_name = "condition_type"
-    # Create and execute table deletion query
-    delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
-    cursor.execute(delete_table_query)
+        # customizable variables: can change if doing a different categorization
+        self.sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
+        self.new_column_name = "condition_type"
+        self.filename = "/Users/kylienorwood/ComputerScience/MerckSummer19/ClinicalTrialsViz/AWS_AACT_Pipeline/conditions_key"
+        self.original_col = "downcase_name"
+        self.nan_filler = "Other"
+        self.table_name = "condition_type"
 
-    connection.commit()
-    print("Table {} successfully deleted from PostgreSQL".format(table_name))
+    def make_connection(self):
+        # Connect to database
+        self.connection = psycopg2.connect(
+            user=self.MasterUsername,
+            password=self.MasterUserPassword,
+            host=self.hostname,
+            database=self.DBName,
+            port=self.DBPort)
 
-    # retrieve necessary data in the form of a data frame
-    df = pd.read_sql_query(sql_command, con=connection)
+    def get_cursor(self):
+        cursor = self.connection.cursor()
+        return cursor
 
-    # function to open JSON file, read, and obtain/return the object with the file's information
-    def read_file_conditions():
-        with open(filename, 'r') as myfile:
+    def delete_table_if_exists(self):
+        # Delete table if it exists
+        table_name = "condition_type"
+        # Create and execute table deletion query
+        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
+        self.get_cursor().execute(delete_table_query)
+
+        self.connection.commit()
+        print("Table {} successfully deleted from PostgreSQL".format(table_name))
+
+    def read_file_conditions(self):
+        with open(self.filename, 'r') as myfile:
             data = myfile.read()
+        self.obj = json.loads(data)
 
-        obj = json.loads(data)
-        return obj
+    def make_data_frame(self):
+        self.df = pd.read_sql_query(self.sql_command, con=self.connection)
 
-    # function checks conditions based on the values in the JSON file - used to apply to each row in the data frame
-    def check_conditions(name):
-        obj = read_file_conditions()
-        result = nan_filler
+    def check_conditions(self, name):
+        result = self.nan_filler
         is_condition_met = False
-        for label in obj:
-            for comparison in obj[label]:
+        for label in self.obj:
+            for comparison in self.obj[label]:
                 if re.search(comparison, name) is not None:
                     result = label
                     is_condition_met = True
@@ -68,43 +76,35 @@ try:
                 break
         return result
 
+    def categorize(self):
+        func = np.vectorize(self.check_conditions)
+        condition_type = func(self.df[self.original_col])
+        self.df[self.new_column_name] = condition_type
 
-    # retrieve and vectorize the function to be applied to each row in the data frame
-    func = np.vectorize(check_conditions)
+        # print value counts so the user can see the categorization numbers for the new column
+        print("Value counts for " + self.new_column_name + ": ")
+        print(self.df[self.new_column_name].value_counts())
 
-    # apply the function to the data frame
-    condition_type = func(df[original_col])
+    def make_new_table(self):
+        self.df.drop(self.original_col, axis=1, inplace=True)
+        create_table_query = '''CREATE TABLE ctgov.condition_type
+                                            (nct_id varchar(15), sponsor_category varchar(30));'''
+        self.get_cursor().execute(create_table_query)
+        self.connection.commit()
+        # Create a directory for csv information if it doesn't exist yet
+        if not os.path.exists('csv_scripts'):
+            os.makedirs('csv_scripts')
 
-    # adds the new column to the data frame with new column name
-    df[new_column_name] = condition_type
+        self.df.to_csv(r'csv_scripts/condition_type.csv', index=False, header=False)
+        f = open('csv_scripts/condition_type.csv')
 
-    # prints the counts for each category in the new column (just so the user can see results)
-    print(df[new_column_name].value_counts())
+        self.get_cursor().copy_from(f, 'ctgov.condition_type', columns=None, sep=",")
+        print("Table {} populated successfully".format(self.table_name))
 
-    df.drop(original_col, axis=1, inplace=True)
+        self.connection.commit()
 
-    create_table_query = '''CREATE TABLE ctgov.condition_type
-                                (nct_id varchar(15), condition_category varchar(30));'''
-    cursor.execute(create_table_query)
-    connection.commit()
-
-    # Create a directory for csv information if it doesn't exist yet
-    if not os.path.exists('csv_scripts'):
-        os.makedirs('csv_scripts')
-
-    df.to_csv(r'csv_scripts/condition_type.csv', index=False, header=False)
-    f = open('csv_scripts/condition_type.csv')
-
-    cursor.copy_from(f, 'ctgov.condition_type', columns=None, sep=",")
-    print("Table {} populated successfully".format(table_name))
-
-    connection.commit()
-
-except Exception as error:
-    print(error)
-
-finally:
-    # Closing database connection
-    if connection:
-        cursor.close()
-        connection.close()
+    def close_connection(self):
+        # Closing database connection
+        if self.connection:
+            self.get_cursor().close()
+            self.connection.close()
