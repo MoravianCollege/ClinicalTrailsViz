@@ -1,7 +1,7 @@
 from AWS_AACT_Pipeline.src.AWS_AACT_Pipeline.condition_type import ConditionCategorizer
 
 
-categorizer = ConditionCategorizer("../conditions_key")
+categorizer = ConditionCategorizer()
 categorizer.read_file_conditions()
 
 
@@ -75,7 +75,7 @@ def test_musculoskeletal():
 
 def test_immune_and_inflammatory():
     assert get_result("rheumatoid arthritis") == "Inflammatory & Immune"
-    assert get_result("pelvic inflammatory disease") == "Inflammatory & Immune"
+    assert get_result("inflammatory disease") == "Inflammatory & Immune"
 
 
 def test_oral_and_gastrointestinal():
