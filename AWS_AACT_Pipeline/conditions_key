@@ -8,7 +8,9 @@
       "neoplasm",
       "mesothelioma",
       "sarcoma",
-      "glioblastoma"
+      "glioblastoma",
+      "neuroblastoma",
+      "cholangiocarcinoma"
    ],
 
     "Neurology": [
@@ -19,7 +21,12 @@
       "epilepsy",
       "brain",
       "cognitive impair",
-      "migraine"
+      "autism",
+      "migraine",
+      "attention deficit hyperactivity disorder",
+      "adhd",
+      "amyotrophic lateral sclerosis",
+      "glioblastoma multiforme"
     ],
 
     "Metabolic & Endocrine": [
@@ -40,7 +47,10 @@
       "atria",
       "arter",
       "coronar",
-      "atherosclerosis"
+      "atherosclerosis",
+      "hypertension",
+      "aortic",
+      "cardiac"
     ],
 
     "Infection": [
@@ -52,20 +62,31 @@
       "sepsis",
       "tuberculosis",
       "pneumonia",
+      "allergic rhinitis",
+      "virus",
+      "diphtheria",
+      "nsclc",
        "(?<![\\w\\d])infection(?![\\w\\d])"
     ],
 
     "Respiratory": [
       "asthma",
       "pulmonary disease",
-      "repirator",
+      "respirator",
       "copd",
       "sleep apnea",
-      "smok"
+      "smok",
+      "(?<![\\w\\d])lung(?![\\w\\d])"
     ],
 
     "Renal & Urogenital": [
       "kidney",
+      "erectile",
+      "bladder",
+      "urinary",
+      "endometriosis",
+      "ovary",
+      "pelvic",
       "(?<![\\w\\d])renal(?![\\w\\d])"
     ],
 
@@ -74,14 +95,18 @@
       "depress",
       "schizo",
       "bipolar",
-      "psychosis",
-      "autism",
-      "insomia"
+      "psycho",
+      "insomia",
+      "posttraumatic stress",
+      "post-traumatic",
+      "ptsd",
+      "obsessive-compulsive disorder",
+      "ocd"
     ],
 
-    "Cogenital Disorders":[
+    "Congenital Disorders":[
       "cystic fibrosis",
-      "cerebral"
+      "cerebral palsy"
     ],
 
     "Musculoskeletal": [
@@ -92,13 +117,25 @@
 
     "Inflammatory & Immune": [
       "rheuma",
-      "inflamma"
+      "inflamma",
+      "systemic lupus erythematosus"
     ],
 
     "Oral & Gastrointestinal": [
       "crohn",
       "bowel",
-      "colitis"
+      "colitis",
+      "cirrhosis",
+      "dental",
+      "constipation",
+      "liver",
+      "diarrhea",
+      "nausea",
+      "periodontitis",
+      "gastroesophageal",
+      "colonoscopy",
+      "prostate"
+
     ],
 
     "Reproductive": [
@@ -111,29 +148,60 @@
       "menstruat",
       "menopause",
       "in vitro",
+      "preeclampsia",
       "(?<![\\w\\d])art(?![\\w\\d])"
     ],
 
     "Blood": [
       "anemi",
       "myelodysplastic",
-      "sickle"
+      "sickle",
+      "blood",
+      "hemorrhage",
+      "dyslipidemia",
+      "hyperlipidemia",
+      "pulmonary embolism",
+      "venous thromboembolism",
+      "hemophilia",
+      "endothelial",
+      "thrombosis"
     ],
 
     "Skin": [
       "psoriasis",
-      "dermat"
+      "dermat",
+      "psoriatic",
+      "(?<![\\w\\d])acne(?![\\w\\d])"
     ],
 
     "Eye": [
       "glaucoma",
       "cataract",
       "myopia",
-      "oculur"
+      "oculur",
+      "macular",
+      "(?<![\\w\\d])eye(?![\\w\\d])"
+    ],
+
+    "Ear": [
+      "hearing",
+      "(?<![wd])ear(?![wd])"
     ],
 
     "Stroke": [
-      "stroke"
+      "stroke",
+      "cerebrovascular accident"
+    ],
+
+    "Injuries & Substances": [
+      "burn",
+      "nictotine",
+      "pharmacokinetics",
+      "alcohol",
+      "tobacco",
+      "substance",
+      "opiod",
+      "(?<![\\w\\d])trauma(?![\\w\\d])"
     ],
 
     "Healthy": [

@@ -92,7 +92,7 @@ class ConditionCategorizer:
     def make_new_table(self):
         self.df.drop(self.original_col, axis=1, inplace=True)
         create_table_query = '''CREATE TABLE ctgov.condition_type
-                                            (nct_id varchar(15), sponsor_category varchar(30));'''
+                                            (nct_id varchar(15), condition_category varchar(30));'''
         self.get_cursor().execute(create_table_query)
         self.connection.commit()
         # Create a directory for csv information if it doesn't exist yet
