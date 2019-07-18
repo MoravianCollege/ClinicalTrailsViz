@@ -26,7 +26,8 @@
       "attention deficit hyperactivity disorder",
       "adhd",
       "amyotrophic lateral sclerosis",
-      "glioblastoma multiforme"
+      "glioblastoma multiforme",
+      "delirium"
     ],
 
     "Metabolic & Endocrine": [
@@ -201,7 +202,13 @@
       "tobacco",
       "substance",
       "opiod",
+      "anesthesia",
+      "injur",
       "(?<![\\w\\d])trauma(?![\\w\\d])"
+    ],
+
+    "Pain": [
+      "(?<![\\w\\d])pain(?![\\w\\d])"
     ],
 
     "Healthy": [
