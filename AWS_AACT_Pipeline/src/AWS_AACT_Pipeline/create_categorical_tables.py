@@ -23,11 +23,9 @@ try:
 
     hostname = dbs['DBInstances'][index]['Endpoint']['Address']
 
-    # Get path to generate_tables.sh file and pass hostname
+    # Get path to file and pass instance hostname
     file_path = os.path.dirname(os.path.abspath(__file__))
-    project_path = os.path.abspath(os.path.join(file_path, os.path.pardir))
-    data_path = os.path.join(project_path, 'AWS_AACT_Pipeline/scripts/generate_tables.sh')
-    subprocess.call(['bash', data_path, hostname])
-
+    data_path = os.path.join(file_path, 'categorize_driver.py')
+    subprocess.call(['python', data_path, hostname])
 except Exception as error:
     print(error)
