@@ -9,4 +9,4 @@ __pycache__/
 .coverage
 */src/AWS_AACT_Pipeline/zip_extract_contents
 *.zip
-*/src/AWS_AACT_Pipeline/scripts/csv_scripts
+*/csv_scripts
