@@ -1,0 +1,64 @@
+{
+  "Enrollment": [
+      "enrol",
+      "recruit"
+    ],
+
+    "Accrual": [
+      "accrual",
+      "accural",
+      "accrue"
+    ],
+
+    "Lack of funding": [
+      "fund",
+      "finan",
+      "budget"
+    ],
+
+    "Logistic Reasons": [
+      "logistic"
+    ],
+
+    "Ineffective or futile": [
+      "efficacy",
+      "futil"
+    ],
+
+    "Administrative decision": [
+      "administrat"
+    ],
+
+    "Sponsor or PI decision": [
+      "sponsor",
+      "pi ",
+      " pi ",
+      "P.I.",
+      "principal investigator",
+      "investigator"
+    ],
+
+    "Business Decision": [
+      "business objective",
+      "business decision",
+      "business reason",
+      "business purposes",
+      "company decision",
+      "company closed",
+      "corporate decision"
+    ],
+
+    "Toxicity": [
+      "toxic",
+      "adverse"
+    ],
+
+    "Feasibility reasons": [
+      "feasi",
+      "feasa"
+    ],
+
+    "Safety": [
+      "safety"
+    ]
+}
