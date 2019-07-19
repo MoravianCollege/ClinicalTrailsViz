@@ -1,0 +1,66 @@
+{
+  "Education": [
+    "college",
+    "school",
+    "univers",
+    "higher education",
+    "academy"
+  ],
+
+  "Hospitals": [
+    "hospital",
+    "hopit",
+    "hospice",
+    "hôpitaux"
+  ],
+
+  "Pharmaceuticals": [
+    "pharmac"
+  ],
+
+  "Research Teams": [
+    "research",
+    "laborator"
+  ],
+
+  "Institutions": [
+    "institu",
+    "instituto"
+  ],
+
+  "Medicine & Health": [
+    "center",
+    "centre",
+    "centro",
+    "group",
+    "medicine",
+    "health",
+    "medical",
+    "clinic"
+  ],
+
+  "Foundations": [
+    "foundation",
+    "fund",
+    "fondation",
+    "fondazion"
+  ],
+
+  "Companies": [
+    " inc ",
+    " inc\\.",
+    "co\\.",
+    "company",
+    "corpor",
+    "corp\\.",
+    "incorporated",
+    "ltd",
+    "llc",
+    " inc"
+  ],
+
+  "Government": [
+    "united states",
+    "government"
+  ]
+}
