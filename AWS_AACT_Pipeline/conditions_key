@@ -1,5 +1,5 @@
 {
-  "Oncology": [
+  "Oncology & Neoplasms": [
       "cancer",
       "lymphoma",
       "leukemia",
@@ -10,7 +10,9 @@
       "sarcoma",
       "glioblastoma",
       "neuroblastoma",
-      "cholangiocarcinoma"
+      "cholangiocarcinoma",
+      "tumor",
+      "glioma"
    ],
 
     "Neurology": [
@@ -27,19 +29,25 @@
       "adhd",
       "amyotrophic lateral sclerosis",
       "glioblastoma multiforme",
-      "delirium"
+      "delirium",
+      "stroke",
+      "cerebrovascular accident",
+      "headache"
     ],
 
     "Metabolic & Endocrine": [
       "obesity",
+      "obese",
       "diabete",
       "metaboli",
+      "diabetic",
       "weight",
       "thyroid",
       "insulin",
       "cholesterol",
       "vitamin",
-      "nutrition"
+      "nutrition",
+      "hyperglycemia"
     ],
 
     "Cardiovascular": [
@@ -51,7 +59,10 @@
       "atherosclerosis",
       "hypertension",
       "aortic",
-      "cardiac"
+      "cardiac",
+      "septic",
+      "hypotension",
+      "vascular"
     ],
 
     "Infection": [
@@ -66,17 +77,21 @@
       "allergic rhinitis",
       "virus",
       "diphtheria",
+      "bacterial",
       "nsclc",
-       "(?<![\\w\\d])infection(?![\\w\\d])"
+      "tetanus",
+       "(?<![\\w\\d])infection(?![\\w\\d])",
+      "(?<![\\w\\d])aids(?![\\w\\d])"
     ],
 
     "Respiratory": [
       "asthma",
-      "pulmonary disease",
+      "pulmonary",
       "respirator",
       "copd",
       "sleep apnea",
       "smok",
+      "emphysema",
       "(?<![\\w\\d])lung(?![\\w\\d])"
     ],
 
@@ -88,6 +103,9 @@
       "endometriosis",
       "ovary",
       "pelvic",
+      "vaginal",
+      "gynecol",
+      "liver",
       "(?<![\\w\\d])renal(?![\\w\\d])"
     ],
 
@@ -101,8 +119,11 @@
       "posttraumatic stress",
       "post-traumatic",
       "ptsd",
+      "psychia",
       "obsessive-compulsive disorder",
-      "ocd"
+      "ocd",
+      "suicide",
+      "mental"
     ],
 
     "Congenital Disorders":[
@@ -111,14 +132,19 @@
     ],
 
     "Musculoskeletal": [
-      "osteoarthritis",
+      "arthritis",
       "osteoporosis",
-      "fibromyalgia"
+      "fibromyalgia",
+      "sarcopenia",
+      "carpal tunnel",
+      "muscul",
+      "muscle"
     ],
 
     "Inflammatory & Immune": [
       "rheuma",
       "inflamma",
+      "immun",
       "systemic lupus erythematosus"
     ],
 
@@ -135,7 +161,10 @@
       "periodontitis",
       "gastroesophageal",
       "colonoscopy",
-      "prostate"
+      "prostate",
+      "oral",
+      "tooth",
+      "teeth"
 
     ],
 
@@ -150,6 +179,7 @@
       "menopause",
       "in vitro",
       "preeclampsia",
+      "cesarean section",
       "(?<![\\w\\d])art(?![\\w\\d])"
     ],
 
@@ -158,6 +188,7 @@
       "myelodysplastic",
       "sickle",
       "blood",
+      "bleeding",
       "hemorrhage",
       "dyslipidemia",
       "hyperlipidemia",
@@ -168,6 +199,19 @@
       "thrombosis"
     ],
 
+    "Generic Health": [
+      "quality of life",
+      "physical activity",
+      "aging",
+      "fatigue",
+      "stress",
+      "health behavior",
+      "exercise",
+      "elderly",
+      "medication adherence",
+      "allergy"
+    ],
+
     "Skin": [
       "psoriasis",
       "dermat",
@@ -175,23 +219,15 @@
       "(?<![\\w\\d])acne(?![\\w\\d])"
     ],
 
-    "Eye": [
+    "Eyes & Ears": [
       "glaucoma",
       "cataract",
       "myopia",
       "oculur",
       "macular",
-      "(?<![\\w\\d])eye(?![\\w\\d])"
-    ],
-
-    "Ear": [
+      "(?<![\\w\\d])eye(?![\\w\\d])",
       "hearing",
       "(?<![wd])ear(?![wd])"
-    ],
-
-    "Stroke": [
-      "stroke",
-      "cerebrovascular accident"
     ],
 
     "Injuries & Substances": [
@@ -199,11 +235,13 @@
       "nictotine",
       "pharmacokinetics",
       "alcohol",
+      "cocaine",
       "tobacco",
       "substance",
       "opiod",
       "anesthesia",
       "injur",
+      "fracture",
       "(?<![\\w\\d])trauma(?![\\w\\d])"
     ],
 
