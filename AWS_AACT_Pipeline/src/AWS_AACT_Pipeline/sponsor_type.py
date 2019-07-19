@@ -1,83 +1,114 @@
-# coding=utf-8
 import os
 import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 import numpy as np
-import re
 import sys
+import json
+import re
 
-try:
-    # load information from .env file to log in and connect to the database
-    load_dotenv()
-    MasterUsername = os.getenv('MasterUsername')
-    MasterUserPassword = os.getenv('MasterUserPassword')
-    hostname = sys.argv[1]
-    DBName = os.getenv('DBName')
-    DBPort = os.getenv('DBPort')
 
-    # Connect to database
-    connection = psycopg2.connect(
-        user=MasterUsername,
-        password=MasterUserPassword,
-        host=hostname,
-        database=DBName,
-        port=DBPort)
+class SponsorCategorizer:
 
-    cursor = connection.cursor()
+    def __init__(self):
+        # load information from .env file to log in and connect to the database
+        load_dotenv()
+        self.MasterUsername = os.getenv('MasterUsername')
+        self.MasterUserPassword = os.getenv('MasterUserPassword')
+        self.hostname = sys.argv[1]
+        self.DBName = os.getenv('DBName')
+        self.DBPort = os.getenv('DBPort')
 
-    # Delete table if it exists
-    table_name = "sponsor_type"
-    # Create and execute table deletion query
-    delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(table_name)
-    cursor.execute(delete_table_query)
+        # other initiated variables to be changed when categorizing
+        self.connection = None
+        self.df = None
+        self.obj = None
 
-    connection.commit()
-    print("Table {} successfully deleted from PostgreSQL".format(table_name))
+        # customizable variables: can change if doing a different categorization
+        self.sql_command = "SELECT nct_id, name FROM ctgov.sponsors"
+        self.new_column_name = "sponsor_category"
+        self.filename = "sponsors_key"
+        self.original_col = "name"
+        self.nan_filler = "Other"
+        self.table_name = "sponsor_type"
 
-    # initiated variables to create the new column
-    sql_command = "SELECT nct_id, name FROM ctgov.sponsors"
-    new_column_name = 'sponsor_category'
+    def make_connection(self):
+        # Connect to database
+        self.connection = psycopg2.connect(
+            user=self.MasterUsername,
+            password=self.MasterUserPassword,
+            host=self.hostname,
+            database=self.DBName,
+            port=self.DBPort)
 
-    # retrieve wanted data from the query (in the form of a data frame)
-    df = pd.read_sql_query(sql_command, con=connection)
+    def get_cursor(self):
+        cursor = self.connection.cursor()
+        return cursor
 
-    # check conditions_list.txt to determine the value to be assigned for the row in the new column
-    df[new_column_name] = np.where(
-        df.name.str.contains("college|school|univers|higher education|academy", flags=re.IGNORECASE, ), "Education",
-        np.where(df.name.str.contains('hospital|hopit|hospice|hôpitaux', flags=re.IGNORECASE), "Hospitals",
-        np.where(df.name.str.contains('pharmac', flags=re.IGNORECASE), "Pharmaceuticals",
-        np.where(df.name.str.contains('research|laborator', flags=re.IGNORECASE), "Research Teams",
-        np.where(df.name.str.contains('institu|istituto', flags=re.IGNORECASE), 'Institutions',
-        np.where(df.name.str.contains('center|centre|centro|group|medicine|health|medical|clinic', flags=re.IGNORECASE), 'Medicine & Health',
-        np.where(df.name.str.contains('foundation|fund|fondation|fondazione', flags=re.IGNORECASE), "Foundations",
-        np.where(df.name.str.contains(' inc |inc\\.|co\\.|company|corpor|corp\\.|incorporated|ltd\\.|llc\\.|ltd| inc| llc', flags=re.IGNORECASE), 'Companies',
-        np.where(df.name.str.contains('united states|government', flags=re.IGNORECASE), 'Government', "Other")))))))))
+    def delete_table_if_exists(self):
+        # Delete table if it exists
+        # Create and execute table deletion query
+        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(self.table_name)
+        self.get_cursor().execute(delete_table_query)
 
-    df.drop('name', axis=1, inplace=True)
+        self.connection.commit()
+        print("Table {} successfully deleted from PostgreSQL".format(self.table_name))
 
-    create_table_query = '''CREATE TABLE ctgov.sponsor_type
-                                (nct_id varchar(15), sponsor_category varchar(25));'''
-    cursor.execute(create_table_query)
-    connection.commit()
+    def read_file_conditions(self):
+        # Get file location
+        file_path = os.path.dirname(os.path.abspath(__file__))
+        parent = os.path.dirname(os.path.dirname(file_path))
+        data_path = os.path.join(parent, self.filename)
 
-    # Create a directory for csv information if it doesn't exist yet
-    if not os.path.exists('csv_scripts'):
-        os.makedirs('csv_scripts')
+        with open(data_path, 'r') as myfile:
+            data = myfile.read()
+        self.obj = json.loads(data)
 
-    df.to_csv(r'csv_scripts/sponsor_type.csv', index=False, header=False)
-    f = open('csv_scripts/sponsor_type.csv')
+    def make_data_frame(self):
+        self.df = pd.read_sql_query(self.sql_command, con=self.connection)
 
-    cursor.copy_from(f, 'ctgov.sponsor_type', columns=None, sep=",")
-    print("Table {} populated successfully".format(table_name))
+    def check_conditions(self, name):
+        result = self.nan_filler
+        is_condition_met = False
+        for label in self.obj:
+            for comparison in self.obj[label]:
+                if re.search(comparison, name) is not None:
+                    result = label
+                    is_condition_met = True
+                    break
+            if is_condition_met:
+                break
+        return result
 
-    connection.commit()
+    def categorize(self):
+        func = np.vectorize(self.check_conditions)
+        sponsor_type = func(self.df[self.original_col])
+        self.df[self.new_column_name] = sponsor_type
 
-except Exception as error:
-    print(error)
+        # print value counts so the user can see the categorization numbers for the new column
+        print("Value counts for " + self.new_column_name + ": ")
+        print(self.df[self.new_column_name].value_counts())
 
-finally:
-    # Closing database connection
-    if connection:
-        cursor.close()
-        connection.close()
+    def make_new_table(self):
+        self.df.drop(self.original_col, axis=1, inplace=True)
+        create_table_query = '''CREATE TABLE ctgov.sponsor_type
+                                            (nct_id varchar(15), sponsor_category varchar(30));'''
+        self.get_cursor().execute(create_table_query)
+        self.connection.commit()
+        # Create a directory for csv information if it doesn't exist yet
+        if not os.path.exists('csv_scripts'):
+            os.makedirs('csv_scripts')
+
+        self.df.to_csv(r'csv_scripts/sponsor_type.csv', index=False, header=False)
+        f = open('csv_scripts/sponsor_type.csv')
+
+        self.get_cursor().copy_from(f, 'ctgov.sponsor_type', columns=None, sep=",")
+        print("Table {} populated successfully".format(self.table_name))
+
+        self.connection.commit()
+
+    def close_connection(self):
+        # Closing database connection
+        if self.connection:
+            self.get_cursor().close()
+            self.connection.close()
