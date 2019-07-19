@@ -62,7 +62,7 @@ class ConditionCategorizer(object):
         # Get file location
         file_path = os.path.dirname(os.path.abspath(__file__))
         parent = os.path.dirname(os.path.dirname(file_path))
-        data_path = os.path.join(parent, self.filename)
+        data_path = os.path.join(parent, "json_keys/" + self.filename)
 
         with open(data_path, 'r') as file:
             data = file.read()
