@@ -8,9 +8,9 @@ import json
 import re
 
 
-class ConditionCategorizer:
+class ConditionCategorizer(object):
 
-    def __init__(self):
+    def __init__(self, original_table, original_col, new_table_name, new_column_name, json_key_file):
         # load information from .env file to log in and connect to the database
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
@@ -25,15 +25,19 @@ class ConditionCategorizer:
         self.obj = None
 
         # customizable variables: can change if doing a different categorization
-        self.sql_command = "SELECT nct_id, downcase_name FROM ctgov.conditions"
-        self.new_column_name = "condition_type"
-        self.filename = "conditions_key"
-        self.original_col = "downcase_name"
+        self.original_table = original_table
+        self.original_col = original_col
+        self.new_table_name = new_table_name
+        self.new_column_name = new_column_name
+        self.filename = json_key_file
+
         self.nan_filler = "Other"
-        self.table_name = "condition_type"
+        self.sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table)
 
     def make_connection(self):
         # Connect to database
+        print(self.original_table, self.original_col, self.new_table_name, self.new_column_name, self.filename)
+
         self.connection = psycopg2.connect(
             user=self.MasterUsername,
             password=self.MasterUserPassword,
@@ -48,11 +52,11 @@ class ConditionCategorizer:
     def delete_table_if_exists(self):
         # Delete table if it exists
         # Create and execute table deletion query
-        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(self.table_name)
+        delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(self.new_table_name)
         self.get_cursor().execute(delete_table_query)
 
         self.connection.commit()
-        print("Table {} successfully deleted from PostgreSQL".format(self.table_name))
+        print("Table {} successfully deleted from PostgreSQL".format(self.new_table_name))
 
     def read_file_conditions(self):
         # Get file location
@@ -60,19 +64,21 @@ class ConditionCategorizer:
         parent = os.path.dirname(os.path.dirname(file_path))
         data_path = os.path.join(parent, self.filename)
 
-        with open(data_path, 'r') as myfile:
-            data = myfile.read()
+        with open(data_path, 'r') as file:
+            data = file.read()
         self.obj = json.loads(data)
 
     def make_data_frame(self):
         self.df = pd.read_sql_query(self.sql_command, con=self.connection)
+        # Set all column values to lower case
+        self.df['{}'.format(self.original_col)] = self.df['{}'.format(self.original_col)].str.lower()
 
     def check_conditions(self, name):
         result = self.nan_filler
         is_condition_met = False
         for label in self.obj:
             for comparison in self.obj[label]:
-                if re.search(comparison, name) is not None:
+                if re.search(comparison, str(name)) is not None:
                     result = label
                     is_condition_met = True
                     break
@@ -91,19 +97,20 @@ class ConditionCategorizer:
 
     def make_new_table(self):
         self.df.drop(self.original_col, axis=1, inplace=True)
-        create_table_query = '''CREATE TABLE ctgov.condition_type
-                                            (nct_id varchar(15), condition_category varchar(30));'''
+        create_table_query = '''CREATE TABLE ctgov.{}
+                                            (nct_id varchar(15), {} varchar(30));'''\
+                                            .format(self.new_table_name, self.new_column_name)
         self.get_cursor().execute(create_table_query)
         self.connection.commit()
         # Create a directory for csv information if it doesn't exist yet
         if not os.path.exists('csv_scripts'):
             os.makedirs('csv_scripts')
 
-        self.df.to_csv(r'csv_scripts/condition_type.csv', index=False, header=False)
-        f = open('csv_scripts/condition_type.csv')
+        self.df.to_csv(r'csv_scripts/{}.csv'.format(self.new_table_name), index=False, header=False)
+        f = open('csv_scripts/{}.csv'.format(self.new_table_name))
 
-        self.get_cursor().copy_from(f, 'ctgov.condition_type', columns=None, sep=",")
-        print("Table {} populated successfully".format(self.table_name))
+        self.get_cursor().copy_from(f, 'ctgov.{}'.format(self.new_table_name), columns=None, sep=",")
+        print("Table {} populated successfully".format(self.new_table_name))
 
         self.connection.commit()
 
