@@ -36,8 +36,6 @@ class ConditionCategorizer(object):
 
     def make_connection(self):
         # Connect to database
-        print(self.original_table, self.original_col, self.new_table_name, self.new_column_name, self.filename)
-
         self.connection = psycopg2.connect(
             user=self.MasterUsername,
             password=self.MasterUserPassword,
