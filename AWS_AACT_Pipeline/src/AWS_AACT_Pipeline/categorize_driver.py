@@ -13,12 +13,11 @@ for driver in drivers:
         print("Connection made successfully")
 
         driver.delete_table_if_exists()
+        print("Processing data...")
         driver.make_data_frame()
         driver.read_file_conditions()
 
         driver.categorize()
-        print("Categorization complete")
-
         driver.make_new_table()
 
     except Exception as error:
@@ -27,3 +26,4 @@ for driver in drivers:
     finally:
         # Closing database connection
         driver.close_connection()
+        print("Categorization complete\n")
