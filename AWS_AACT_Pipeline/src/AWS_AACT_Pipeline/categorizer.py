@@ -8,7 +8,7 @@ import json
 import re
 
 
-class ConditionCategorizer(object):
+class Categorizer(object):
 
     def __init__(self, original_table, original_col, new_table_name, new_column_name, json_key_file):
         # load information from .env file to log in and connect to the database
