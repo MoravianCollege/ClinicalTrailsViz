@@ -5,7 +5,7 @@ driver = Categorizer('conditions', 'downcase_name', 'condition_type', 'condition
 driver2 = Categorizer('studies', 'why_stopped', 'why_stopped_table', 'stop_reason', 'why_stopped_key')
 driver3 = Categorizer('sponsors', 'name', 'sponsor_type', 'sponsor_category', 'sponsors_key')
 
-drivers = [driver3]
+drivers = [driver, driver2, driver3]
 print("Starting categorization...")
 
 for driver in drivers:
