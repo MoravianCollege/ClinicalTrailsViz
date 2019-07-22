@@ -1,4 +1,4 @@
-from AWS_AACT_Pipeline.ConditionCategorizer import ConditionCategorizer
+from AWS_AACT_Pipeline.categorizer import ConditionCategorizer
 
 # Categorizer entry format: (original_table, original_col, new_table, new_column, json_key_file)
 driver = ConditionCategorizer('conditions', 'downcase_name', 'condition_type', 'condition_category', 'conditions_key')
