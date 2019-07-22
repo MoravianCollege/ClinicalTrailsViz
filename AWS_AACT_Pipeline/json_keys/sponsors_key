@@ -4,32 +4,73 @@
     "school",
     "univers",
     "higher education",
-    "academy"
+    "academy",
+    "ku leuven"
   ],
 
   "Hospitals": [
     "hospital",
     "hopit",
     "hospice",
-    "hôpitaux"
+    "hôpitaux",
+    "hopitaux",
+    "medical center",
+    "utrecht",
+    "chu de reims"
+  ],
+
+  "Government": [
+    "united states",
+    "government",
+    "national",
+    "cihr",
+    "centers for disease",
+    "cdc",
+    "alliance for clinical trials",
+    "nacional",
+    "(?<![\\w\\d])us(?![\\w\\d])"
   ],
 
   "Pharmaceuticals": [
-    "pharmac",
-    "merck"
+    "pharma",
+    "merck",
+    "glaxosmithkline",
+    "pfizer",
+    "astrazeneca",
+    "boehringer",
+    "roche",
+    "eli lilly",
+    "squibb",
+    "bayer",
+    "sanofi",
+    "novartis",
+    "nordisk",
+    "takeda",
+    "allergan",
+    "abbott",
+    "wyeth",
+    "abbvie",
+    "celgene",
+    "shire",
+    "ipsen",
+    "lundbeck",
+    "amgen",
+    "gilead sciences",
+    "biogen",
+    "mallinckrodt",
+    "forest laboratories"
   ],
 
-  "Research Teams": [
+  "Research & Institutes": [
     "research",
-    "laborator"
-  ],
-
-  "Institutions": [
+    "laborator",
+    "dana-farber",
     "institu",
-    "instituto"
+    "instituto",
+    "american heart"
   ],
 
-  "Medicine & Health": [
+  "Medicine & Health Groups": [
     "center",
     "centre",
     "centro",
@@ -37,7 +78,8 @@
     "medicine",
     "health",
     "medical",
-    "clinic"
+    "clinic",
+    "langone"
   ],
 
   "Foundations": [
@@ -55,13 +97,13 @@
     "corpor",
     "corp\\.",
     "incorporated",
+    "corporation",
     "ltd",
     "llc",
-    " inc"
-  ],
-
-  "Government": [
-    "united states",
-    "government"
+    " inc",
+    "medtronic",
+    "kaiser",
+    "zimmer biomet",
+    "nestlé"
   ]
 }
