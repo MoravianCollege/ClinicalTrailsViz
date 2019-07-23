@@ -12,6 +12,7 @@
       "neuroblastoma",
       "cholangiocarcinoma",
       "tumor",
+      "myeloma",
       "glioma"
    ],
 
@@ -25,12 +26,13 @@
       "cognitive impair",
       "autism",
       "migraine",
-      "attention deficit hyperactivity disorder",
+      "attention deficit",
       "adhd",
       "amyotrophic lateral sclerosis",
       "glioblastoma multiforme",
       "delirium",
       "stroke",
+      "insomnia",
       "cerebrovascular accident",
       "headache"
     ],
@@ -60,7 +62,10 @@
       "hypertension",
       "aortic",
       "cardiac",
+      "cardial",
       "septic",
+      "hypoglycemia",
+      "angina pectoris",
       "hypotension",
       "vascular"
     ],
@@ -106,6 +111,9 @@
       "vaginal",
       "gynecol",
       "liver",
+      "hypogonadism",
+      "prostatic",
+      "hemodialysis",
       "(?<![\\w\\d])renal(?![\\w\\d])"
     ],
 
@@ -122,6 +130,7 @@
       "psychia",
       "obsessive-compulsive disorder",
       "ocd",
+      "anorexia",
       "suicide",
       "mental"
     ],
@@ -135,10 +144,12 @@
       "arthritis",
       "osteoporosis",
       "fibromyalgia",
+      "spondylitis",
       "sarcopenia",
       "carpal tunnel",
       "muscul",
-      "muscle"
+      "muscle",
+      "lymphedema"
     ],
 
     "Inflammatory & Immune": [
@@ -162,8 +173,10 @@
       "gastroesophageal",
       "colonoscopy",
       "prostate",
+      "dysphagia",
       "oral",
       "tooth",
+      "gingivitis",
       "teeth"
 
     ],
@@ -208,6 +221,8 @@
       "health behavior",
       "exercise",
       "elderly",
+      "fever",
+      "vomit",
       "medication adherence",
       "allergy"
     ],
@@ -216,6 +231,7 @@
       "psoriasis",
       "dermat",
       "psoriatic",
+      "actinic keratosis",
       "(?<![\\w\\d])acne(?![\\w\\d])"
     ],
 
@@ -225,6 +241,7 @@
       "myopia",
       "oculur",
       "macular",
+      "tinnitus",
       "(?<![\\w\\d])eye(?![\\w\\d])",
       "hearing",
       "(?<![wd])ear(?![wd])"
@@ -238,15 +255,18 @@
       "cocaine",
       "tobacco",
       "substance",
-      "opiod",
+      "opioid",
       "anesthesia",
       "injur",
       "fracture",
+      "nicotine",
       "(?<![\\w\\d])trauma(?![\\w\\d])"
     ],
 
-    "Pain": [
-      "(?<![\\w\\d])pain(?![\\w\\d])"
+    "Pain & Surgery": [
+      "(?<![\\w\\d])pain(?![\\w\\d])",
+      "surgery",
+      "postoperative"
     ],
 
     "Healthy": [
