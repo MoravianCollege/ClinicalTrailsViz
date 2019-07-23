@@ -12,7 +12,7 @@ class DatabaseManager(object):
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
         self.MasterUserPassword = os.getenv('MasterUserPassword')
-        self.hostname = sys.argv[1]
+        self.hostname = os.getenv("Hostname")
         self.DBName = os.getenv('DBName')
         self.DBPort = os.getenv('DBPort')
 
@@ -42,8 +42,8 @@ class DatabaseManager(object):
         self.connection.commit()
         print("Table {} successfully deleted from PostgreSQL".format(new_table_name))
 
-    def make_data_frame(self, original_col, original_table):
-        sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table)
+    def make_data_frame(self, original_col, original_table, extra_sql_query=''):
+        sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table, extra_sql_query)
         self.df = pd.read_sql_query(sql_command, con=self.connection)
         # Set all column values to lower case
         self.df['{}'.format(original_col)] = self.df['{}'.format(original_col)].str.lower()
