@@ -10,7 +10,8 @@ import re
 
 class Categorizer(object):
 
-    def __init__(self, original_table, original_col, new_table_name, new_column_name, json_key_file):
+    def __init__(self, original_table, original_col, new_table_name,
+                 new_column_name, json_key_file, extra_sql_query=""):
         # load information from .env file to log in and connect to the database
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
@@ -25,14 +26,16 @@ class Categorizer(object):
         self.obj = None
 
         # customizable variables: can change if doing a different categorization
+
         self.original_table = original_table
         self.original_col = original_col
         self.new_table_name = new_table_name
         self.new_column_name = new_column_name
         self.filename = json_key_file
+        self.extra_sql_query = extra_sql_query if extra_sql_query is not None else ""
 
         self.nan_filler = "Other"
-        self.sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table)
+        self.sql_command = "SELECT nct_id, {} FROM ctgov.{} {}".format(self.original_col, self.original_table, self.extra_sql_query)
 
     def make_connection(self):
         # Connect to database
@@ -96,8 +99,8 @@ class Categorizer(object):
     def make_new_table(self):
         self.df.drop(self.original_col, axis=1, inplace=True)
         create_table_query = '''CREATE TABLE ctgov.{}
-                                            (nct_id varchar(15), {} varchar(30));'''\
-                                            .format(self.new_table_name, self.new_column_name)
+                                            (nct_id varchar(15), {} varchar(30));''' \
+            .format(self.new_table_name, self.new_column_name)
         self.get_cursor().execute(create_table_query)
         self.connection.commit()
         # Create a directory for csv information if it doesn't exist yet
