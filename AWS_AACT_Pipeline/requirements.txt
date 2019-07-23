@@ -3,4 +3,5 @@ psycopg2==2.7.7
 pandas==0.24.1
 numpy==1.16.4
 boto3==1.9.185
-pytest
+pytest==5.0.1
+
