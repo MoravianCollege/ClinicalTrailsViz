@@ -32,7 +32,7 @@ class Categorizer(object):
         self.new_table_name = new_table_name
         self.new_column_name = new_column_name
         self.filename = json_key_file
-        self.extra_sql_query = extra_sql_query if extra_sql_query is not None else ""
+        self.extra_sql_query = extra_sql_query
 
         self.nan_filler = "Other"
         self.sql_command = "SELECT nct_id, {} FROM ctgov.{} {}".format(self.original_col, self.original_table, self.extra_sql_query)
