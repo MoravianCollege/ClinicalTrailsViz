@@ -7,7 +7,7 @@ driver3 = Categorizer('sponsors', 'name', 'sponsor_type', 'sponsor_category', 's
 driver4 = Categorizer('sponsors', 'name', 'lead_sponsor_type', 'sponsor',
                       'sponsors_key', "where lead_or_collaborator = 'lead'")
 
-drivers = [driver2, driver4]
+drivers = [driver, driver2, driver3, driver4]
 print("Starting categorization...")
 
 for driver in drivers:
