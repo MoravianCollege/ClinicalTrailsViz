@@ -4,8 +4,10 @@ from AWS_AACT_Pipeline.Categorizer import Categorizer
 driver = Categorizer('conditions', 'downcase_name', 'condition_type', 'condition_category', 'conditions_key')
 driver2 = Categorizer('studies', 'why_stopped', 'why_stopped_table', 'stop_reason', 'why_stopped_key')
 driver3 = Categorizer('sponsors', 'name', 'sponsor_type', 'sponsor_category', 'sponsors_key')
+driver4 = Categorizer('sponsors', 'name', 'lead_sponsor_type', 'sponsor',
+                      'sponsors_key', "where lead_or_collaborator = 'lead'")
 
-drivers = [driver, driver2, driver3]
+drivers = [driver2, driver4]
 print("Starting categorization...")
 
 for driver in drivers:
