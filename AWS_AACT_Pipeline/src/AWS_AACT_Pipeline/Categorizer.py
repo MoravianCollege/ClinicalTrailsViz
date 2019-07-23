@@ -6,10 +6,9 @@ import re
 
 class Categorizer(object):
 
-    def __init__(self, database_manager):
+    def __init__(self):
         self.obj = None
         self.nan_filler = "Other"
-        self.database_manager = database_manager
 
     def read_file_conditions(self, filename):
         # Get file location
@@ -34,11 +33,11 @@ class Categorizer(object):
                 break
         return result
 
-    def categorize(self, original_col, new_column_name):
+    def categorize(self, original_col, new_column_name, df):
         func = np.vectorize(self.check_conditions)
-        condition_type = func(self.database_manager.get_data_frame()[original_col])
-        self.database_manager.get_data_frame()[new_column_name] = condition_type
+        condition_type = func(df[original_col])
+        df[new_column_name] = condition_type
 
         # print value counts so the user can see the categorization numbers for the new column
         print("Value counts for " + new_column_name + ": ")
-        print(self.database_manager.get_data_frame()[new_column_name].value_counts())
+        print(df[new_column_name].value_counts())

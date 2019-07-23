@@ -1,14 +1,8 @@
 from AWS_AACT_Pipeline.Categorizer import Categorizer
 from AWS_AACT_Pipeline.database_manager import DatabaseManager
 
-# Categorizer entry format: (original_table, original_col, new_table, new_column, json_key_file)
-#driver = Categorizer('conditions', 'downcase_name', 'condition_type', 'condition_category', 'conditions_key')
-#driver2 = Categorizer('studies', 'why_stopped', 'why_stopped_table', 'stop_reason', 'why_stopped_key')
 database_manager = DatabaseManager()
-categorizer = Categorizer(database_manager)
-#driver3 = Categorizer('sponsors', 'name', 'sponsor_type', 'sponsor_category', 'sponsors_key')
-#driver4 = Categorizer('sponsors', 'name', 'lead_sponsor_type', 'sponsor',
-                      #'sponsors_key', "where lead_or_collaborator = 'lead'")
+categorizer = Categorizer()
 
 conditions = {
     "original_table": 'conditions',
@@ -40,10 +34,10 @@ lead_sponsors =  {
     "new_table": 'lead_sponsor_type',
     "new_column": 'sponsor',
     "json_key_file": 'sponsors_key',
-    "extra_sql_command": "where lead_or_collaborator = 'lead'"
+    "extra_sql_command": " WHERE lead_or_collaborator = 'lead'"
 }
 
-list_of_tables = [conditions, why_stopped, all_sponsors, lead_sponsors]
+list_of_tables = [all_sponsors, lead_sponsors]
 
 print("Starting categorization...")
 
@@ -54,10 +48,18 @@ for table in list_of_tables:
     
         database_manager.delete_table_if_exists(table["new_table"])
         print("Processing data...")
-        database_manager.make_data_frame(table["original_col"], table["original_table"])  # need to add extra sql query if necessary
+
+        if "extra_sql_command" in table:
+            database_manager.make_data_frame(table["original_col"],
+                                             table["original_table"],
+                                             table["extra_sql_command"])
+        else:
+            database_manager.make_data_frame(table["original_col"],
+                                             table["original_table"])
+
         categorizer.read_file_conditions(table["json_key_file"])
     
-        categorizer.categorize(table['original_col'], table['new_column'])
+        categorizer.categorize(table['original_col'], table['new_column'], database_manager.get_data_frame())
         database_manager.make_new_table(table['original_col'], table["new_table"], table["new_column"])
 
     except Exception as error:
@@ -67,25 +69,3 @@ for table in list_of_tables:
         # Closing database connection
         database_manager.close_connection()
         print("Categorization complete\n")
-
-
-'''for driver in drivers:
-    try:
-        database_manager.make_connection()
-        print("Connection made successfully")
-
-        database_manager.delete_table_if_exists("sponsor_type")
-        print("Processing data...")
-        database_manager.make_data_frame("name", "sponsors") # need to add extra sql query if necessary
-        driver.read_file_conditions("sponsors_key")
-
-        driver.categorize('name', 'sponsor_category')
-        database_manager.make_new_table("name", "sponsor_type", "sponsor_category")
-
-    except Exception as error:
-        print(error)
-
-    finally:
-        # Closing database connection
-        database_manager.close_connection()
-        print("Categorization complete\n")'''
