@@ -16,6 +16,7 @@ class Categorizer(object):
         parent = os.path.dirname(os.path.dirname(file_path))
         data_path = os.path.join(parent, "json_keys/" + filename)
 
+        # open file and retrieve object with json's information
         with open(data_path, 'r') as file:
             data = file.read()
         self.obj = json.loads(data)
