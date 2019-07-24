@@ -12,7 +12,7 @@ class DatabaseManager(object):
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
         self.MasterUserPassword = os.getenv('MasterUserPassword')
-        self.hostname = os.getenv("Hostname")
+        self.hostname = sys.argv[1]
         self.DBName = os.getenv('DBName')
         self.DBPort = os.getenv('DBPort')
 
@@ -34,7 +34,6 @@ class DatabaseManager(object):
         return cursor
 
     def delete_table_if_exists(self, new_table_name):
-        # Delete table if it exists
         # Create and execute table deletion query
         delete_table_query = '''DROP TABLE IF EXISTS ctgov.{};'''.format(new_table_name)
         self.get_cursor().execute(delete_table_query)
@@ -45,8 +44,8 @@ class DatabaseManager(object):
     def make_data_frame(self, original_col, original_table, extra_sql_query=''):
         sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table + extra_sql_query)
         self.df = pd.read_sql_query(sql_command, con=self.connection)
+
         # Set all column values to lower case
-        print(sql_command)
         self.df['{}'.format(original_col)] = self.df['{}'.format(original_col)].str.lower()
 
     def get_data_frame(self):
@@ -76,5 +75,3 @@ class DatabaseManager(object):
         if self.connection:
             self.get_cursor().close()
             self.connection.close()
-
-
