@@ -17,7 +17,7 @@ class MockDatabaseManager:
     def get_data_frame(self):
         return self.dataframe
 
-    def make_new_table(self, dataframe, original_col, new_table, new_column):
+    def make_new_table(self, dataframe, new_table, new_column):
         self.final_dataframe = dataframe
 
     def close_connection(self):
