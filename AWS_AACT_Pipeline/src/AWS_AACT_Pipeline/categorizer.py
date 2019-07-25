@@ -11,15 +11,22 @@ class Categorizer(object):
         self.nan_filler = "Other"
 
     def read_file_conditions(self, filename):
-        # Get file location
-        file_path = os.path.dirname(os.path.abspath(__file__))
-        parent = os.path.dirname(os.path.dirname(file_path))
-        data_path = os.path.join(parent, "json_keys/" + filename)
+        try:
+            # Get file location
+            file_path = os.path.dirname(os.path.abspath(__file__))
+            parent = os.path.dirname(os.path.dirname(file_path))
+            data_path = os.path.join(parent, "json_keys/" + filename)
 
-        # open file and retrieve object with json's information
-        with open(data_path, 'r') as file:
-            data = file.read()
-        self.obj = json.loads(data)
+            # open file and retrieve object with json's information
+            with open(data_path, 'r') as file:
+                data = file.read()
+            self.obj = json.loads(data)
+
+        except Exception as e:
+            print(e)
+            raise e
+
+
 
     def check_conditions(self, name):
         result = self.nan_filler
