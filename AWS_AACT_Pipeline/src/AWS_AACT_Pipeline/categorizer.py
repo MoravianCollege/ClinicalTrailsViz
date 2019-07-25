@@ -16,7 +16,11 @@ class Categorizer(object):
             file_path = os.path.dirname(os.path.abspath(__file__))
             parent = os.path.dirname(os.path.dirname(file_path))
             data_path = os.path.join(parent, "json_keys/" + filename)
+        except Exception as e:
+            print(e)
+            raise e
 
+        try:
             # open file and retrieve object with json's information
             with open(data_path, 'r') as file:
                 data = file.read()
