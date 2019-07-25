@@ -26,8 +26,6 @@ class Categorizer(object):
             print(e)
             raise e
 
-
-
     def check_conditions(self, name):
         result = self.nan_filler
         is_condition_met = False
