@@ -12,7 +12,7 @@ class DatabaseManager(object):
         load_dotenv()
         self.MasterUsername = os.getenv('MasterUsername')
         self.MasterUserPassword = os.getenv('MasterUserPassword')
-        self.hostname = os.getenv("Hostname")
+        self.hostname = sys.argv[1]
         self.DBName = os.getenv('DBName')
         self.DBPort = os.getenv('DBPort')
 
