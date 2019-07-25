@@ -36,9 +36,14 @@ class Categorizer(object):
 
     def categorize(self, original_col, new_column_name, df):
         func = np.vectorize(self.check_conditions)
-        condition_type = func(df[original_col])
-        df[new_column_name] = condition_type
+        categorized_col = func(df[original_col])
+
+        df[new_column_name] = categorized_col
+
+        df.drop(original_col, axis=1, inplace=True)
 
         # print value counts so the user can see the categorization numbers for the new column
         print("Value counts for " + new_column_name + ": ")
         print(df[new_column_name].value_counts())
+
+        return df
