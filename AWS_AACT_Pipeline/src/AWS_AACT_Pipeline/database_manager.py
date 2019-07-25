@@ -51,8 +51,7 @@ class DatabaseManager(object):
     def get_data_frame(self):
         return self.df
 
-    def make_new_table(self, original_col, new_table_name, new_column_name):
-        self.df.drop(original_col, axis=1, inplace=True)
+    def make_new_table(self, categorized_df, new_table_name, new_column_name):
         create_table_query = '''CREATE TABLE ctgov.{}
                                             (nct_id varchar(15), {} varchar(30));''' \
             .format(new_table_name, new_column_name)
@@ -62,7 +61,7 @@ class DatabaseManager(object):
         if not os.path.exists('csv_scripts'):
             os.makedirs('csv_scripts')
 
-        self.df.to_csv(r'csv_scripts/{}.csv'.format(new_table_name), index=False, header=False)
+        categorized_df.to_csv(r'csv_scripts/{}.csv'.format(new_table_name), index=False, header=False)
         f = open('csv_scripts/{}.csv'.format(new_table_name))
 
         self.get_cursor().copy_from(f, 'ctgov.{}'.format(new_table_name), columns=None, sep=",")

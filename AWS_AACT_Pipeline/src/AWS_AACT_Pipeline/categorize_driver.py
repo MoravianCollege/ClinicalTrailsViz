@@ -9,6 +9,9 @@ class Driver:
         self.database_manager = database_manager
         self.categorizer = Categorizer()
 
+    def make_connection(self):
+        self.database_manager.make_connection()
+
     def make_new_tables(self, original_table, original_col, new_table, new_column, json_key_file, extra_sql_command=''):
         print("\n")
         print("Starting categorization...")
@@ -21,8 +24,11 @@ class Driver:
             self.database_manager.make_data_frame(original_col, original_table)
 
         self.categorizer.read_file_conditions(json_key_file)
-        self.categorizer.categorize(original_col, new_column, self.database_manager.get_data_frame())
-        self.database_manager.make_new_table(original_col, new_table, new_column)
+        categorized_df = self.categorizer.categorize(original_col, new_column, self.database_manager.get_data_frame())
+        self.database_manager.make_new_table(categorized_df, new_table, new_column)
+
+    def close_connection(self):
+        self.database_manager.close_connection()
 
 
 if __name__ == '__main__':
@@ -31,15 +37,10 @@ if __name__ == '__main__':
     driver = Driver(database_conn)
 
     try:
-        database_conn.make_connection()
+        driver.make_connection()
         print("Connection made successfully")
 
         # make new tables for each of our algorithms
-        driver.make_new_tables(original_table="conditions",
-                               original_col="downcase_name",
-                               new_table="condition_type",
-                               new_column="condition_category",
-                               json_key_file="conditions_key")
 
         driver.make_new_tables(original_table="studies",
                                original_col="why_stopped",
@@ -60,10 +61,16 @@ if __name__ == '__main__':
                                json_key_file="sponsors_key",
                                extra_sql_command=" WHERE lead_or_collaborator = 'lead'")
 
+        driver.make_new_tables(original_table="conditions",
+                               original_col="downcase_name",
+                               new_table="condition_type",
+                               new_column="condition_category",
+                               json_key_file="conditions_key")
+
     except Exception as error:
         print(error)
 
     finally:
         # Closing database connection
-        database_conn.close_connection()
+        driver.close_connection()
         print("Categorization complete\n")

@@ -10,3 +10,4 @@ __pycache__/
 */src/AWS_AACT_Pipeline/zip_extract_contents
 *.zip
 */csv_scripts
+*/src/AWS_AACT_Pipeline/csv_scripts
