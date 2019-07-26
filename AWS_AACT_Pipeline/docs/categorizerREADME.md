@@ -8,7 +8,7 @@
 
 
 
-As a result, we have decided to develop a program that will categorize variables into new, categorical variables, assisting us in utilizing these useful descriptive variables. Below explains how we categorize these variables - we use condition type as an example to help clarify.
+As a result, we have decided to develop a program that will sort variables into new categorical variables, assisting us in utilizing these useful descriptive variables. Below explains how we categorize these variables - we use condition type as an example to help clarify.
 
 ## How We Categorize Variables Such As Condition Type
 
