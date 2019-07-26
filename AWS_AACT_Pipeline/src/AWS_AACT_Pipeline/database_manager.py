@@ -41,8 +41,8 @@ class DatabaseManager(object):
         self.connection.commit()
         print("Table {} successfully deleted from PostgreSQL".format(new_table_name))
 
-    def make_data_frame(self, original_col, original_table, extra_sql_query=''):
-        sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table + extra_sql_query)
+    def make_data_frame(self, original_col, original_table, extra_sql_command=''):
+        sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table + extra_sql_command)
         self.df = pd.read_sql_query(sql_command, con=self.connection)
 
         # Set all column values to lower case
