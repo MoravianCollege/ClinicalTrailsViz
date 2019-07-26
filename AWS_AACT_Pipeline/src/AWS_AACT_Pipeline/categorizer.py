@@ -30,12 +30,12 @@ class Categorizer(object):
             print(e)
             raise e
 
-    def check_conditions(self, name):
+    def check_conditions(self, row):
         result = self.nan_filler
         is_condition_met = False
         for label in self.obj:
             for comparison in self.obj[label]:
-                if re.search(comparison, str(name)) is not None:
+                if re.search(comparison, str(row)) is not None:
                     result = label
                     is_condition_met = True
                     break
