@@ -16,7 +16,11 @@ class Categorizer(object):
             file_path = os.path.dirname(os.path.abspath(__file__))
             parent = os.path.dirname(os.path.dirname(file_path))
             data_path = os.path.join(parent, "json_keys/" + filename)
+        except Exception as e:
+            print(e)
+            raise e
 
+        try:
             # open file and retrieve object with json's information
             with open(data_path, 'r') as file:
                 data = file.read()
@@ -26,12 +30,12 @@ class Categorizer(object):
             print(e)
             raise e
 
-    def check_conditions(self, name):
+    def check_conditions(self, row):
         result = self.nan_filler
         is_condition_met = False
         for label in self.obj:
             for comparison in self.obj[label]:
-                if re.search(comparison, str(name)) is not None:
+                if re.search(comparison, str(row)) is not None:
                     result = label
                     is_condition_met = True
                     break
