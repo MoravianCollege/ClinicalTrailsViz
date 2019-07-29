@@ -25,20 +25,6 @@ host = "'your database endpoint'"
 
 * Now you may use the scripts available in the repository, these environment variables will be referenced later using the syntax Sys.getenv()
 
-### Allowing access to AWS instance
-
-* Connect to the AWS website and click on the RDS section
-
-* Click on the database labeled "clinicaltrialsdatabase"
-
-* Under the "Connectivity & security" tab, find "Security" and click on the blue link directly under "VPC security groups"
-
-* Click on the "inbound" tab and click edit
-
-* Click "Add Rule" and create a new Custom TCP Rule with port range 5432 and for the source drop-down menu click "My IP", then click save
-
-* If this is done correctly, your computer will now be able to pass through security and connect to the database
-
 ### Connecting to the database
 
 * First-time startup enter the command (this command will only ever need to be entered one time) `install.packages("RPostgreSQL")`
@@ -50,7 +36,7 @@ host = "'your database endpoint'"
 * Connect to database with user environment variables
 
 ```
-con <- dbConnect(drv,    dbname="aact",    host=Sys.getenv("host"),    port=5432,    user=Sys.getenv("userid"),    password=Sys.getenv("userpass"))
+con <- dbConnect(drv,    dbname=Sys.getenv("dbname"),    host=Sys.getenv("host"),    port=5432,    user=Sys.getenv("userid"),    password=Sys.getenv("userpass"))
 ```
 
 * Make the database schema public for easier query syntax `dbExecute(con, "SET search_path TO ctgov,public")
