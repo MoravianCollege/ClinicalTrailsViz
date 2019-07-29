@@ -1,109 +1,109 @@
 {
   "Education": [
-    "college",
-    "school",
-    "univers",
-    "higher education",
     "academy",
-    "ku leuven"
+    "college",
+    "higher education",
+    "ku leuven",
+    "school",
+    "univers"
   ],
 
   "Hospitals": [
-    "hospital",
+    "chu de reims",
     "hopit",
-    "hospice",
-    "hôpitaux",
     "hopitaux",
+    "hospice",
+    "hospital",
+    "hôpitaux",
     "medical center",
-    "utrecht",
-    "chu de reims"
+    "utrecht"
   ],
 
   "Government": [
-    "united states",
-    "government",
-    "national",
-    "cihr",
-    "centers for disease",
-    "cdc",
+    "(?<![\\w\\d])us(?![\\w\\d])",
     "alliance for clinical trials",
+    "cdc",
+    "centers for disease",
+    "cihr",
+    "government",
     "nacional",
-    "(?<![\\w\\d])us(?![\\w\\d])"
+    "national",
+    "united states"
   ],
 
   "Pharmaceuticals": [
-    "pharma",
-    "merck",
-    "glaxosmithkline",
-    "pfizer",
-    "astrazeneca",
-    "boehringer",
-    "roche",
-    "eli lilly",
-    "squibb",
-    "bayer",
-    "sanofi",
-    "novartis",
-    "nordisk",
-    "takeda",
-    "allergan",
     "abbott",
-    "wyeth",
     "abbvie",
+    "allergan",
+    "amgen",
+    "astrazeneca",
+    "bayer",
+    "biogen",
+    "boehringer",
     "celgene",
-    "shire",
+    "eli lilly",
+    "forest laboratories",
+    "gilead sciences",
+    "glaxosmithkline",
     "ipsen",
     "lundbeck",
-    "amgen",
-    "gilead sciences",
-    "biogen",
     "mallinckrodt",
-    "forest laboratories"
+    "merck",
+    "nordisk",
+    "novartis",
+    "pfizer",
+    "pharma",
+    "roche",
+    "sanofi",
+    "shire",
+    "squibb",
+    "takeda",
+    "wyeth"
   ],
 
   "Research & Institutes": [
-    "research",
-    "laborator",
+    "american heart",
     "dana-farber",
     "institu",
     "instituto",
-    "american heart"
+    "laborator",
+    "research"
   ],
 
   "Medicine & Health Groups": [
     "center",
     "centre",
     "centro",
-    "group",
-    "medicine",
-    "health",
-    "medical",
     "clinic",
-    "langone"
+    "group",
+    "health",
+    "langone",
+    "medical",
+    "medicine"
   ],
 
   "Foundations": [
-    "foundation",
-    "fund",
     "fondation",
-    "fondazion"
+    "fondazion",
+    "foundation",
+    "fund"
   ],
 
   "Companies": [
     " inc ",
+    " inc",
     " inc\\.",
     "co\\.",
     "company",
-    "corpor",
     "corp\\.",
-    "incorporated",
+    "corpor",
     "corporation",
-    "ltd",
-    "llc",
-    " inc",
-    "medtronic",
+    "incorporated",
     "kaiser",
-    "zimmer biomet",
-    "nestlé"
+    "llc",
+    "ltd",
+    "medtronic",
+    "nestlé",
+    "zimmer biomet"
   ]
 }

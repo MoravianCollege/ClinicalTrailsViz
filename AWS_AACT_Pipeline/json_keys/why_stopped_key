@@ -1,64 +1,86 @@
 {
   "Enrollment": [
       "enrol",
+      "include patients",
+      "inclusion",
+      "lack of participants",
+      "lack of patients",
+      "recrut",
       "recruit"
     ],
 
     "Accrual": [
       "accrual",
+      "accrue",
       "accural",
-      "accrue"
+      "acrual"
     ],
 
     "Lack of funding": [
-      "fund",
+      "budget",
       "finan",
-      "budget"
+      "fund"
     ],
 
     "Logistic Reasons": [
-      "logistic"
+      "drug supply",
+      "drug unavailable",
+      "insufficient resources",
+      "logistic",
+      "manufacturer",
+      "product",
+      "resources",
+      "supply"
     ],
 
     "Ineffective or futile": [
+      "competing",
       "efficacy",
-      "futil"
+      "feasa",
+      "feasi",
+      "futil",
+      "inconclusive",
+      "interim analysis",
+      "no benefit",
+      "unnecessary"
     ],
 
     "Administrative decision": [
-      "administrat"
+      "administrat",
+      "dsmb",
+      "fda",
+      "idmc",
+      "imp",
+      "ind",
+      "irb",
+      "recommendation"
     ],
 
     "Sponsor or PI decision": [
-      "sponsor",
+      "by pi",
+      "investigator",
       "pi ",
       " pi ",
-      "P.I.",
+      "pi's",
       "principal investigator",
-      "investigator"
+      "sponsor"
     ],
 
     "Business Decision": [
-      "business objective",
-      "business decision",
-      "business reason",
-      "business purposes",
-      "company decision",
-      "company closed",
-      "corporate decision"
-    ],
-
-    "Toxicity": [
-      "toxic",
-      "adverse"
-    ],
-
-    "Feasibility reasons": [
-      "feasi",
-      "feasa"
+      "business",
+      "company",
+      "corporate",
+      "management"
     ],
 
     "Safety": [
-      "safety"
+      "adverse",
+      "death",
+      "ethic",
+      "morbid",
+      "mortal",
+      "risk",
+      "safety",
+      "toxic"
     ]
 }
