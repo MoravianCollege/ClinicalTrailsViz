@@ -43,7 +43,14 @@ class DatabaseManager(object):
 
     def make_data_frame(self, original_col, original_table, extra_sql_command=''):
         sql_command = "SELECT nct_id, {} FROM ctgov.{}".format(original_col, original_table + extra_sql_command)
-        self.df = pd.read_sql_query(sql_command, con=self.connection)
+
+        try:
+            self.df = pd.read_sql_query(sql_command, con=self.connection)
+
+        except Exception as error:
+            print("\n")
+            print("Table or column not found! Make sure you have entered a valid table and/or column name")
+            raise error
 
         # Set all column values to lower case
         self.df['{}'.format(original_col)] = self.df['{}'.format(original_col)].str.lower()

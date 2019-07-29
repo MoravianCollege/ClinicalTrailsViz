@@ -4,7 +4,7 @@ import pytest
 from AWS_AACT_Pipeline.categorize_driver import Driver
 from AWS_AACT_Pipeline.mock_db_manager import MockDatabaseManager
 from AWS_AACT_Pipeline.categorizer import Categorizer
-from AWS_AACT_Pipeline.database_manager import DatabaseManager
+from AWS_AACT_Pipeline.mock_db import MockDatabase
 import pandas as pd
 
 
@@ -42,3 +42,12 @@ def test_good_driver_call():
     final_df = mock_db.get_final_dataframe()
 
     assert final_df.equals(end_df)
+
+
+def test_typos_in_query_throw_exception():
+    og_df = pd.DataFrame(columns=['color', 'nct_id'], index=['kylie','willy', 'riley', 'ben', 'jonah'])
+
+    mock_db = MockDatabase(og_df)
+    driver = Driver(mock_db)
+
+    pytest.raises(Exception, driver.make_new_tables, "team", "color", 'new_table', 'color_category', 'mock_json')
