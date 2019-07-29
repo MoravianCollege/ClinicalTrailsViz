@@ -12,4 +12,4 @@ class MockDatabase:
         pass
 
     def make_data_frame(self, original_col, original_table, extra_sql_query=''):
-        pass
+        raise Exception
