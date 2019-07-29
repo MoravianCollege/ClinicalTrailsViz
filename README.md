@@ -11,6 +11,7 @@ To access the clinical trials database, you will be prompted with a username and
 * Inside the file write your username, password, and host environment variables with your database login information:
 
 ``` 
+dbname = "aact_back"
 userid = "'your database account username'"
 userpass = "'your database account password'"
 host = "'your database endpoint'"
