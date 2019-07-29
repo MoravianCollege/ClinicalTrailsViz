@@ -21,7 +21,7 @@ tryCatch({
 # Connect to database
 drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv,
-                 dbname="aact",
+                 dbname=Sys.getenv("dbname"),
                  host=Sys.getenv("host"),
                  port=5432,
                  user=Sys.getenv("userid"),

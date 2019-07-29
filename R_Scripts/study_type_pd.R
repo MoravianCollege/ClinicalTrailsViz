@@ -21,7 +21,7 @@ tryCatch({
 # Connect to AACT database
 drv <- dbDriver('PostgreSQL')
 con <- dbConnect(drv,
-                 dbname="aact",
+                 dbname=Sys.getenv("dbname"),
                  host=Sys.getenv("host"),
                  port=5432,
                  user=Sys.getenv("userid"),
@@ -45,3 +45,4 @@ plot <- ggplot(data=x, aes(x=study_type, y=count)) + geom_bar(stat="identity") +
   theme(plot.title = element_text(hjust = 0.5),
         plot.caption=element_text(hjust=0.5, vjust=0.5))
 plot + scale_y_continuous(labels = comma)
+
