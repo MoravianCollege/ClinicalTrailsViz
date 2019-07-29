@@ -46,7 +46,8 @@ if __name__ == '__main__':
                                original_col="why_stopped",
                                new_table="why_stopped_table",
                                new_column="stop_reason",
-                               json_key_file="why_stopped_key")
+                               json_key_file="why_stopped_key",
+                               extra_sql_command=" WHERE why_stopped IS NOT NULL")
 
         driver.make_new_tables(original_table="sponsors",
                                original_col="name",
